@@ -23,13 +23,14 @@ private:
     cst_t cst;
     std::pair<char,int> position;
     std::map<size_type, std::pair<char,int>> map_pos;
-    char* name_f;
+    const char* name_f;
     char* suff;
     
 public:
     void A(node_type v, char c);
     void repeat(char* name_file);
-    void get_i(char c,node_type v);
+    bool get_i(char c,node_type v);
+    void printlist();
 };
 
 
