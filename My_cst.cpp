@@ -17,65 +17,76 @@ void My_cst::repeat(char* name_file)
 {
     name_f = name_file;
     construct(cst, name_file,1);
-
-    typedef cst_bfs_iterator<cst_t> iterator;
+    
     iterator begin = iterator(&cst, cst.root());
     iterator end   = iterator(&cst, cst.root(), true, true);
     
-    vector<pair<char,int>> vec(MAX_NODES);
+    cout<< cst.size()<<endl;
+    cout<<cst.nodes()<<endl;
     
-    vector<vector<pair<char,int>> > vec2d(MAX_CHILDREN,vec);
-    
-    pair_array = vec2d;
-    
-    for(iterator it=begin; it != end; it++)
+    for(iterator w=begin; w != end; w++)
     {
-//        for(int k = 0; k < cst.degree(*it);k++)
-//            for(int l = 1; l < cst.degree(*it); l++)
-//            {
-//                auto child = cst.select_child(*it,k);
-//                auto sib = cst.select_child(*it,l);
+        vector<pair< pair<int,int>, pair<int,int>> > tmp;
+        for(int k = 0; k <= cst.degree(*w);k++)
+            for(int l = k+1; l <= cst.degree(*w); l++)
+            {
+                auto v_f = cst.select_child(*w,k);
+                auto v_g = cst.select_child(*w,l);
+                
                 for(int c=0;c<128;c++)
                 {
-//                    A(child,c);
-//                    if( map_pos.count(cst.id(child))==1 )
-                    A(*it,c);
-//                    if( map_pos.count(cst.id(*it))==1 )
-//                    {
-//                        cout << "id node : " << cst.id(child) << " - pair : ( " << map_pos.at(cst.id(child)).first << ", " << map_pos.at(cst.id(child)).second << ")" << endl;
-////                        cout << "id node : " << cst.id(*it) << " - pair : ( " << map_pos.at(cst.id(*it)).first << ", " << map_pos.at(cst.id(*it)).second << ")" << endl;
-//                        for(int d=0; d<128; d++)
-//
-//                            A(sib,d);
-//                            if (d!=c && !map_pos.contains(cst.id(child)))
-//                            {
-//                                cout << "pair 2: ( ( " << position.first << ", " << position.second << ")" << endl;
-//                            }
-//
-//                    }
+                    A(v_f,c);
+                    //                    if( !( map_pos[cst.id(v_f)].empty()) )
+                    //                    {
+                    //                        for( pair<char,int> i : map_pos[cst.id(v_f)])
+                    //                            for(int d=0;c<128;c++)
+                    //                            {
+                    //                                A(v_g,d);
+                    //                                if( c!=d && !(map_pos[cst.id(v_g)].empty()) )
+                    //                                {
+                    //                                    for( pair<char,int> j : map_pos[cst.id(v_g)])
+                    //                                    {
+                    //                                        if(!cst.is_leaf(*w))
+                    //                                        {
+                    //                                            pair< pair<int,int>, pair<int,int>> p =make_pair( make_pair(i.second, i.second+cst.depth(*w)-1), make_pair(j.second, j.second+cst.depth(*w)-1));
+                    //                                            if(find(tmp.begin(), tmp.end(), p) != tmp.end()){}
+                    //                                            else
+                    //                                                tmp.push_back(p);
+                    //                                        }
+                    //                                    }
+                    //                                }
+                    //                            }
+                    //                    }
+                    //                    }
                 }
-               
-//                for(int i=1; i<=cst.depth(child);i++)
-//
-//                    for(int j=1; j<=cst.depth(sib);j++)
-//
-//                        char c = cst.edge(child,i);
-//                        cout << c << " - " ;
-//                        char d = cst.edge(sib,j);
-//                        cout << d << " " ;
-//                        if(c!=d)
-//                        {
-//                            cout << "result: ( (" << i << "," << i+cst.depth(*it)-1 << "), (" << j << "," << j+cst.depth(*it)-1 << ")" << endl;
-//
-//                        }
-//
-//
-//            }
+                
+                //                for(int i=1; i<=cst.depth(child);i++)
+                //
+                //                    for(int j=1; j<=cst.depth(sib);j++)
+                //
+                //                        char c = cst.edge(child,i);
+                //                        cout << c << " - " ;
+                //                        char d = cst.edge(sib,j);
+                //                        cout << d << " " ;
+                //                        if(c!=d)
+                //                        {
+                //                            cout << "result: ( (" << i << "," << i+cst.depth(*it)-1 << "), (" << j << "," << j+cst.depth(*it)-1 << ")" << endl;
+                //
+                //                        }
+                //
+                //
+            }
+        if(!(tmp.empty()))
+            results_array.insert( make_pair(cst.id(*w), tmp));
     }
 }
 
-void My_cst::A(node_type v, char c,int id)
+void My_cst::A(node_type v, char c)
 {
+    pos_type::iterator it;
+    vector<pair<char,int>> vect;
+    
+    
     if(cst.is_leaf(v))
     {
         if(get_i(c,v))
@@ -83,50 +94,74 @@ void My_cst::A(node_type v, char c,int id)
             
             int place;
             if(cst.id(v)==0)
-            {
                 place = 0;
-            }
             else
-            {
                 place = cst.id(cst.parent(v));
-            }
-            vector<pair<char,int>> vect;
-            vect.push_back(position);
-
             
-            pair_array.at(place) = vect;
-            pair_array.at(cst.id(v)) = vect;
-
-//            vector<vector<pair<char,int>> >::iterator it = pair_array.insert(pair_array.begin()+place+1,vect);
-//            vector<vector<pair<char,int>> >::iterator it2 = pair_array.insert(pair_array.begin()+cst.id(v)+1,vect);
             
+                        it= map_pos.find(place);
+            
+                        if (it != map_pos.end())
+                        {
+                            if (find(it->second.begin(), it->second.end(), position) != it->second.end()){}
+                            else
+                                map_pos[place].push_back(position);
+                        }
+                        else{
+                            map_pos.insert(make_pair(place,vect));
+                            map_pos[place].push_back(position);
+                        }
+            //
+            
+            map_pos.insert(make_pair(cst.id(v),vect));
+            if( map_pos[cst.id(v)].empty())
+                map_pos[cst.id(v)].push_back(position);
         }
     }
     else
         for(auto& child : cst.children(v))
         {
-            id = cst.id(child);
-            A(child, c,id);
+            A(child, c);
+            
+            if((it = map_pos.find(cst.id(v))) != map_pos.end())
+            {
+                if(!(cst.is_leaf(child)))
+                    for(pair<char,int> p : map_pos[cst.id(child)])
+                    {
+
+                        if (find(it->second.begin(), it->second.end(), p) != it->second.end()){}
+                        else
+                            map_pos[cst.id(v)].push_back(p);
+                    }
+            }
+            else
+            {
+                map_pos.insert(make_pair(cst.id(v),vect));
+                for(pair<char,int> p : map_pos[cst.id(child)])
+                    map_pos[cst.id(v)].push_back(p);
+
+            }
         }
- 
+    
+    
 }
 
 bool My_cst::get_i(char c, node_type v)
 {
     ifstream is(name_f);
     string origin( (istreambuf_iterator<char>(is) ), (istreambuf_iterator<char>()  ));
-                       
+    
     int length = origin.size();
     int index = length - cst.depth(v) + 1;
-                       
+    
     if( c == origin[index - 1] )
     {
-        cout << origin[index - 1] <<endl;
+//        cout << origin[index - 1] <<endl;
         position = make_pair(c,index+1);
         
-        for(int i=index; i<length; i++)
-            cout << origin[i];
-        cout<< " : node "<< cst.id(v)<<endl;
+//        for(int i=index; i<length; i++)
+//            cout << origin[i];
+//        cout<< " : node "<< cst.id(v)<<endl;
         return true;
     }
     is.close();
@@ -135,19 +170,38 @@ bool My_cst::get_i(char c, node_type v)
 
 void My_cst::printlist()
 {
-//    for (map<size_type, list<pair<char,int>>>::iterator it=map_pos.begin(); it!=map_pos.end(); it++)
-//    {
-//        cout << "\n id node : " << it->first << endl;
-//
-//        for (pair<char,int> p : it->second)
-//            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
-//    }
-    for(int i=0;i<pair_array.size(); i++) {
-        for (int j=0;j<pair_array[i].size(); j++)
-            cout << "  pair : (" << pair_array[i][j].first << ", " << pair_array[i][j].second << ")" << endl;
-        cout << endl;
+    for (pos_type::iterator it=map_pos.begin(); it!=map_pos.end(); it++)
+    {
+        cout << "\n id node : " << it->first << endl;
+        
+        for (pair<char,int> p : it->second)
+            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
+        cout<<endl;
     }
- 
+    cout << "------------------------------------------------------------"<<endl;
+    
+    for (results_type::iterator it=results_array.begin(); it!=results_array.end(); it++)
+    {
+        cout << "\n id node :" << it->first << endl;
+        
+        for (pair<pair<int,int>,pair<int,int>> p : it->second)
+            cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
+    }
+    cout << "\n------------------------------------------------------------\n"<<endl;
+    //    for(int i=0;i<pair_array.size(); i++) {
+    //        for (int j=0;j<pair_array[i].size(); j++)
+    //            cout << "  pair : (" << pair_array[i][j].first << ", " << pair_array[i][j].second << ")" << endl;
+    //        cout << endl;
+    //    }
+    //    int i = 0;
+    //    for (vector<pair<char,int>> v : pair_array)
+    //    {
+    //        cout << " i : " << i++ << endl;
+    //        for (pair<char,int> p : v)
+    //            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
+    //        cout<<endl;
+    //    }
+    
 }
 
 int main(int argc, char* argv[])

@@ -8,8 +8,8 @@
 #ifndef repeat_hpp
 #define repeat_hpp
 
-#define MAX_NODES 50
-#define MAX_CHILDREN 50
+#define MAX_NODES 40
+#define MAX_CHILDREN 40
 
 
 #include <stdio.h>
@@ -21,17 +21,23 @@ typedef sdsl::cst_sct3<> cst_t;
 
 class My_cst : public cst_t
 {
+public:
+    typedef sdsl::cst_bfs_iterator<cst_t> iterator;
+    typedef std::map<size_type, std::vector<std::pair<char,int>> > pos_type;
+    typedef std::map<size_type, std::vector<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
+
 private:
     
     cst_t cst;
     std::pair<char,int> position;
-//    std::map<size_type, std::list<std::pair<char,int>>> map_pos;
-    std::vector< std::vector<std::pair<char,int> > > pair_array;
+    pos_type map_pos;
+    results_type results_array;
     const char* name_f;
+
     
 public:
     
-    void A(node_type v, char c,int id=0);
+    void A(node_type v, char c);
     void repeat(char* name_file);
     bool get_i(char c,node_type v);
     void printlist();
