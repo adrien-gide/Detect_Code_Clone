@@ -32,9 +32,9 @@ void My_cst::repeat(char* name_file)
             {
                 auto v_f = cst.select_child(*w,l);
                 auto v_g = cst.select_child(*w,k);
-
+                
                 if( !( map_pos[cst.id(v_f)].empty()) )
-
+                    
                     for( pair<char,int> i : map_pos[cst.id(v_f)])
                         if(!(map_pos[cst.id(v_g)].empty()) )
                             for( pair<char,int> j : map_pos[cst.id(v_g)])
@@ -98,7 +98,7 @@ void My_cst::A(node_type v, char c)
                 map_pos[place].push_back(position);
             }
             
-
+            
             map_pos.insert(make_pair(cst.id(v),vect));
             if( map_pos[cst.id(v)].empty())
                 map_pos[cst.id(v)].push_back(position);
@@ -187,21 +187,4 @@ void My_cst::printlist()
     //        cout<<endl;
     //    }
     
-}
-
-int main(int argc, char* argv[])
-{
-    if(argc < 2)
-    {
-        cout << "usage: " << argv[0] << " file" << endl;
-        return 1;
-    }
-    
-    My_cst test;
-    
-    test.repeat(argv[1]);
-    
-    test.printlist();
-    
-    return 0;
 }
