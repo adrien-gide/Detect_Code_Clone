@@ -8,10 +8,6 @@
 #ifndef repeat_hpp
 #define repeat_hpp
 
-#define MAX_NODES 40
-#define MAX_CHILDREN 40
-
-
 #include <stdio.h>
 #include <iostream>
 #include <sdsl/suffix_trees.hpp>
@@ -33,14 +29,17 @@ private:
     pos_type map_pos;
     results_type results_array;
     const char* name_f;
-
+    std::string origin;
     
 public:
     
-    void A(node_type v, char c);
-    void repeat(char* name_file);
-    bool get_i(char c,node_type v);
+    void repeat(char* name_file,int threshold);
     void printlist();
+    
+private:
+    bool get_i(char c,node_type v);
+    void A(node_type v, char c);
+
 };
 
 
