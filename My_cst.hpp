@@ -34,11 +34,13 @@ private:
     
 public:
     inline results_type getResults() {return results_array;};
+    inline cst_t getCST() {return cst;};
     void repeat(const char* name_file,int threshold);
     void printlist();
+    int compare(My_cst c);
     
 private:
-    bool get_i(char c,node_type v);
+    bool get_i(char c, node_type v);
     void A(node_type v, char c);
 
 };

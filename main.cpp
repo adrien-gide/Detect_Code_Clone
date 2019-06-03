@@ -2,40 +2,19 @@
 //  main.cpp
 //  
 //
-//  Created by Adrien Gide on 2019/05/29.
+//  Created by Adrien Gide on 2019/06/03.
 //
 //
-//
-//#include <stdio.h>
 //#include "My_cst.hpp"
 //
-//
-//using namespace std;
-//
-//int main(int argc, char* argv[])
+//int main()
 //{
-//    if(argc < 2)
-//    {
-//        cout << " usage: " << argv[0] << " file threshold>=2" << endl;
-//        return 1;
-//    }
-// 
+//    My_cst test;
+//    clock_t time;
+//    time = clock();
 //
-//    ifstream f(argv[1]);
-//    if (!f)
-//    {
-//        cout << " usage: " << argv[0] << " file threshold" << endl;
-//        return 1;
-//    }
-//    else
-//    {
-//        My_cst test;
-//        
-//        test.repeat(argv[1],atoi(argv[2]));
-//        
-//        test.printlist();
-//    }
-// 
+//    test.repeat("Test files/Test3",8);
+//    test.printlist();
+//    std::cout << "Time: " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< std::endl;
 //
-//    return 0;
 //}
