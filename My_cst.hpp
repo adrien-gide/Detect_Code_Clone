@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sdsl/suffix_trees.hpp>
 #include <vector>
+#include <string>
 
 typedef sdsl::cst_sct3<> cst_t;
 
@@ -32,8 +33,8 @@ private:
     std::string origin;
     
 public:
-    
-    void repeat(char* name_file,int threshold);
+    inline results_type getResults() {return results_array;};
+    void repeat(const char* name_file,int threshold);
     void printlist();
     
 private:

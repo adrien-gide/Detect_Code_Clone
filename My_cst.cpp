@@ -6,12 +6,11 @@
 //
 
 #include "My_cst.hpp"
-#include <string>
 
 using namespace sdsl;
 using namespace std;
 
-void My_cst::repeat(char* name_file, int threshold)
+void My_cst::repeat(const char* name_file, int threshold)
 {
     name_f = name_file;
     construct(cst, name_file,1);
@@ -153,22 +152,25 @@ void My_cst::printlist()
 //            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
 //    }
     cout << "\n------------------------------------------------------------"<<endl;
-    int i =0;
-    for (results_type::iterator it=results_array.begin(); it!=results_array.end(); it++)
+    if (!results_array.empty())
     {
-        if (it->first!=cst.id(cst.root()))
+        int j =0;
+        for (results_type::iterator it=results_array.begin(); it!=results_array.end(); it++)
         {
-            cout << "\nid node : " << i++<< " - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
-            
-            cout << "  - Occurences : " << cst.degree(cst.inv_id(it->first))<<endl;
-            cout << "  - Repeat string : ";
-            for(int i=it->second[0].first.first-1; i<it->second[0].first.second; i++)
-                cout<< origin[i];
-            cout << endl;
-//            for (pair<pair<int,int>,pair<int,int>> p : it->second)
-//                cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
+            if (it->first!=cst.id(cst.root()))
+            {
+                cout << "\nid node : " << j++<< " - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
+                
+                cout << "  - Occurences : " << cst.degree(cst.inv_id(it->first))<<endl;
+                cout << "  - Repeat string : ";
+                for(int i=it->second[0].first.first-1; i<it->second[0].first.second; i++)
+                    cout<< origin[i];
+                cout << endl;
+    //            for (pair<pair<int,int>,pair<int,int>> p : it->second)
+    //                cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
+            }
         }
     }
-    
-    cout << "\n------------------------------------------------------------\n"<<endl;
+    else
+        cout << " No maximal pair(s) for this threshold !" << endl;
 }
