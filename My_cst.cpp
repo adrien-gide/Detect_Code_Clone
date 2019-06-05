@@ -10,7 +10,7 @@
 using namespace sdsl;
 using namespace std;
 
-void My_cst::repeat(const char* name_file, int threshold)
+void My_cst::repeat(const char* name_file,int threshold)
 {
     name_f = name_file;
     construct(cst, name_file,1);
@@ -19,16 +19,11 @@ void My_cst::repeat(const char* name_file, int threshold)
     iterator end   = iterator(&cst, cst.root(), true, true);
     
     for(iterator init=begin; init != end; init++)
-        if ( cst.id(*init)!=cst.id(cst.root()) )
-        {
-            A(*init,10);
-            for(int c=32;c<127;c++)
-                A(*init,c);
-        }
-
+        if (cst.id(*init)!=cst.id(cst.root()) && (cst.depth(*init)>=threshold))
+            A(*init);
+    
     for(iterator w=begin; w != end; w++)
-    {
-        if (cst.id(*w)!=cst.id(cst.root()) && cst.depth(*w)>=threshold)
+        if (cst.id(*w)!=cst.id(cst.root()) && (cst.depth(*w)>=threshold))
         {
             vector<pair< pair<int,int>, pair<int,int>> > tmp;
             for(int k = 1; k <= cst.degree(*w);k++)
@@ -37,7 +32,7 @@ void My_cst::repeat(const char* name_file, int threshold)
                 {
                     auto v_f = cst.select_child(*w,l);
                     auto v_g = cst.select_child(*w,k);
-
+                    
                     if( !( map_pos[cst.id(v_f)].empty()) )
                         for( pair<char,int> i : map_pos[cst.id(v_f)])
                             if(!(map_pos[cst.id(v_g)].empty()) )
@@ -46,34 +41,26 @@ void My_cst::repeat(const char* name_file, int threshold)
                                     {
                                         pair< pair<int,int>, pair<int,int>> p =make_pair( make_pair(i.second, i.second+cst.depth(*w)-1), make_pair(j.second, j.second+cst.depth(*w)-1));
                                         if(find(tmp.begin(), tmp.end(), p) == tmp.end())
-                                        {
                                             tmp.push_back(p);
-                                        }
-                                            
                                     }
                 }
             }
             if(!(tmp.empty()))
                 results_array.insert( make_pair(cst.id(*w), tmp));
-
         }
-    }
 }
 
-void My_cst::A(node_type v, char c)
+void My_cst::A(node_type v)
 {
     pos_type::iterator it;
     vector<pair<char,int>> vect;
     if(cst.is_leaf(v))
     {
-        if(get_i(c,v))
+        if(get_i(v) && cst.id(cst.parent(v))!=cst.id(cst.root()))
         {
             int place;
-            if(cst.id(v)==cst.id(cst.root()))
-                place = cst.id(cst.root());
-            else
-                place = cst.id(cst.parent(v));
-
+            place = cst.id(cst.parent(v));
+            
             it= map_pos.find(place);
             if (it != map_pos.end() )
             {
@@ -84,7 +71,7 @@ void My_cst::A(node_type v, char c)
                 map_pos.insert(make_pair(place,vect));
                 map_pos[place].push_back(position);
             }
-
+            
             map_pos.insert(make_pair(cst.id(v),vect));
             if( map_pos[cst.id(v)].empty())
                 map_pos[cst.id(v)].push_back(position);
@@ -93,7 +80,7 @@ void My_cst::A(node_type v, char c)
     else
         for(auto& child : cst.children(v))
         {
-            A(child, c);
+            A(child);
             if((it = map_pos.find(cst.id(v))) != map_pos.end())
             {
                 if(!(cst.is_leaf(child)))
@@ -106,44 +93,34 @@ void My_cst::A(node_type v, char c)
                 map_pos.insert(make_pair(cst.id(v),vect));
                 for(pair<char,int> p : map_pos[cst.id(child)])
                     map_pos[cst.id(v)].push_back(p);
-
             }
         }
-    
-    
 }
 
-bool My_cst::get_i(char c, node_type v)
+bool My_cst::get_i( node_type v)
 {
-   
+    
     ifstream is(name_f);
-//
-//    std::ifstream in_file(name_f, std::ios::binary | std::ios::ate);
     
     int length;
     int index;
-
-   if (is.good())
+    
+    if (is.good())
     {
         string tmp( (istreambuf_iterator<char>(is) ), (istreambuf_iterator<char>()  ));
-
+        
         origin = tmp;
         length = origin.size();
         index = length - cst.depth(v) + 1;
-    
-        if( c == origin[index - 1] )
-
-            //    if( c == edge )
-        {
+        
+        
 //                    cout << origin[index - 1] <<endl;
-            position = make_pair(c,index+1);
-            
+        position = make_pair(origin[index - 1] ,index+1);
+        
 //                    for(int i=index; i<length; i++)
 //                        cout << origin[i];
 //                    cout<< " : node "<< cst.id(v)<<endl;
-            return true;
-        }
-    
+        return true;
     }
     is.close();
     return false;
@@ -151,30 +128,30 @@ bool My_cst::get_i(char c, node_type v)
 
 void My_cst::printlist()
 {
-//    for (pos_type::iterator it=map_pos.begin(); it!=map_pos.end(); it++)
-//    {
-//        cout << "\n id node : " << it->first << endl;
-//
-//        for (pair<char,int> p : it->second)
-//            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
-////    }
-//    cout << "\n------------------------------------------------------------"<<endl;
+    //    for (pos_type::iterator it=map_pos.begin(); it!=map_pos.end(); it++)
+    //    {
+    //        cout << "\n id node : " << it->first << endl;
+    //
+    //        for (pair<char,int> p : it->second)
+    //            cout << "  pair : (" << p.first << ", " << p.second << ")" << endl;
+    //    }
+    //    cout << "\n------------------------------------------------------------"<<endl;
     if (!results_array.empty())
     {
         int j =0;
         for (results_type::iterator it=results_array.begin(); it!=results_array.end(); it++)
         {
-            if (it->first!=cst.id(cst.root()))
+            if (it->first!=cst.id(cst.root())  )
             {
-                cout << "\nid node : " << j++<< " - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
-
-                cout << "  - Occurences : " << cst.degree(cst.inv_id(it->first))<<endl;
+                cout << "\nid : " << j++ << " - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
+                
+                cout << "  - Occurences : " << cst.size(cst.inv_id(it->first))<<endl;
                 cout << "  - Repeat string : ";
                 for(int i=it->second[0].first.first-1; i<it->second[0].first.second; i++)
                     cout<< origin[i];
                 cout << endl;
-    //            for (pair<pair<int,int>,pair<int,int>> p : it->second)
-    //                cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
+                //                for (pair<pair<int,int>,pair<int,int>> p : it->second)
+                //                    cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
             }
         }
     }

@@ -4,7 +4,7 @@
 //
 //  Created by Adrien Gide on 2019/05/21.
 //
-
+#pragma once
 #ifndef repeat_hpp
 #define repeat_hpp
 
@@ -35,13 +35,13 @@ private:
 public:
     inline results_type getResults() {return results_array;};
     inline cst_t getCST() {return cst;};
-    void repeat(const char* name_file,int threshold);
+    void repeat(const char* name_file,int threshold=2);
     void printlist();
-    int compare(My_cst c);
+    int compare(My_cst other);
     
 private:
-    bool get_i(char c, node_type v);
-    void A(node_type v, char c);
+    bool get_i( node_type v);
+    void A(node_type v);
 
 };
 
