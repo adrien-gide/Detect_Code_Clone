@@ -1,9 +1,8 @@
-//
-//  My_cst.cpp
-//  
-//
-//  Created by Adrien Gide on 2019/05/21.
-//
+/**
+ *
+ * My_cst.cpp
+ * Created by Adrien Gide on 2019/05/21.
+ */
 
 #include "My_cst.hpp"
 
@@ -143,13 +142,13 @@ void My_cst::printlist()
         {
             if (it->first!=cst.id(cst.root())  )
             {
-                cout << "\nid : " << j++ << " - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
-                
+                cout << "\nid : " << j++ << endl;
+                cout << "  - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
                 cout << "  - Occurences : " << cst.size(cst.inv_id(it->first))<<endl;
-                cout << "  - Repeat string : ";
+                cout << "  - Repeat string :";
                 for(int i=it->second[0].first.first-1; i<it->second[0].first.second; i++)
                     cout<< origin[i];
-                cout << endl;
+                cout << "\n" << endl;
                 //                for (pair<pair<int,int>,pair<int,int>> p : it->second)
                 //                    cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
             }
@@ -162,7 +161,19 @@ void My_cst::printlist()
 
 
 
-int My_cst::compare(My_cst other)
+void My_cst::compare(set<string> files, int threshold)
 {
-    return 0;
+    ofstream merge("Test files/tmp.txt", ios_base::binary);
+    
+    for (string f : files)
+    {
+        ifstream tmp(f, ios_base::in);
+        merge << tmp.rdbuf();
+        tmp.close();
+        
+    }
+    merge.close();
+    
+    repeat("Test files/tmp.txt", threshold);
+    
 }

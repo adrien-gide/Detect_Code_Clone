@@ -4,9 +4,10 @@
 //
 //  Created by Adrien Gide on 2019/05/21.
 //
-#pragma once
+
 #ifndef repeat_hpp
 #define repeat_hpp
+#pragma once
 
 #include <stdio.h>
 #include <iostream>
@@ -33,15 +34,53 @@ private:
     std::string origin;
     
 public:
-    inline results_type getResults() {return results_array;};
-    inline cst_t getCST() {return cst;};
+    /**
+     * Main fonction for the detection of code clone.
+     *
+     * This will create a compressed suffix tree for the file we want to test. It will also traverse it in order to find the repeats on the file.
+     *
+     * @param threshold Minimum length for the repeat
+     */
     void repeat(const char* name_file,int threshold=2);
+
+    /**
+     * Printing the results corresponding to the pairs found by the function repeat.
+     *
+     * @relatesalso repeat
+     */
     void printlist();
-    int compare(My_cst other);
+    
+    /**
+     * Will compare multiple files.
+     *
+     * Compare multiple files by concatenate them and pass the concatenated file at the function repeat.
+     *
+     * @param files Set with the names of the files we want to compare
+     * @param threshold Minimum length for the repeat
+     * @see repeat
+     */
+    void compare(std::set<std::string> files, int threshold=2);
     
 private:
-    bool get_i( node_type v);
+    /**
+     * Principal function for positions of each node.
+     *
+     * Will use the function get_i to match a pair (caracter, position) with a node. A leaf will only have one pair, a node can have multiple pairs.
+     * It will be equivalent to the number of leaves under this node.
+     *
+     * @see get_i
+     */
+    
     void A(node_type v);
+    
+    /**
+     * Supplying function for positions of each node.
+     *
+     * It will get the start position of the suffix corresponding at each node and the caracter before.
+     *
+     * @relatesalso A
+     */
+    bool get_i(node_type v);
 
 };
 
