@@ -17,6 +17,8 @@ void My_cst::repeat(const char* name_file,int threshold)
     iterator begin = iterator(&cst, cst.root());
     iterator end   = iterator(&cst, cst.root(), true, true);
     
+/// Iniitializing the pair(s) (character, position) for each node/leaf with a corresponding size
+    
     for(iterator init=begin; init != end; init++)
         if (cst.id(*init)!=cst.id(cst.root()) && (cst.depth(*init)>=threshold))
             A(*init);
@@ -24,7 +26,9 @@ void My_cst::repeat(const char* name_file,int threshold)
     for(iterator w=begin; w != end; w++)
         if (cst.id(*w)!=cst.id(cst.root()) && (cst.depth(*w)>=threshold))
         {
-            vector<pair< pair<int,int>, pair<int,int>> > tmp;
+            set<pair< pair<int,int>, pair<int,int>> > tmp;
+            
+/// Loops on each children pair for a node
             for(int k = 1; k <= cst.degree(*w);k++)
             {
                 for(int l = k+1; l <= cst.degree(*w); l++)
@@ -39,8 +43,7 @@ void My_cst::repeat(const char* name_file,int threshold)
                                     if (j.first!=i.first)
                                     {
                                         pair< pair<int,int>, pair<int,int>> p =make_pair( make_pair(i.second, i.second+cst.depth(*w)-1), make_pair(j.second, j.second+cst.depth(*w)-1));
-                                        if(find(tmp.begin(), tmp.end(), p) == tmp.end())
-                                            tmp.push_back(p);
+                                        tmp.insert(p);
                                     }
                 }
             }
@@ -146,7 +149,7 @@ void My_cst::printlist()
                 cout << "  - Length of the repeat string : " << cst.depth(cst.inv_id(it->first))<< endl;
                 cout << "  - Occurences : " << cst.size(cst.inv_id(it->first))<<endl;
                 cout << "  - Repeat string :";
-                for(int i=it->second[0].first.first-1; i<it->second[0].first.second; i++)
+                for(int i=it->second.begin()->first.first-1; i<it->second.begin()->first.second; i++)
                     cout<< origin[i];
                 cout << "\n" << endl;
                 //                for (pair<pair<int,int>,pair<int,int>> p : it->second)

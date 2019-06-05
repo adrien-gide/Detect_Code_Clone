@@ -22,7 +22,7 @@ class My_cst : public cst_t
 public:
     typedef sdsl::cst_bfs_iterator<cst_t> iterator;
     typedef std::map<size_type, std::vector<std::pair<char,int>> > pos_type;
-    typedef std::map<size_type, std::vector<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
+    typedef std::map<size_type, std::set<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
 
 private:
     
@@ -65,7 +65,7 @@ private:
     /**
      * Principal function for positions of each node.
      *
-     * Will use the function get_i to match a pair (caracter, position) with a node. A leaf will only have one pair, a node can have multiple pairs.
+     * Will use the function get_i to match a pair (character, position) with a node. A leaf will only have one pair, a node can have multiple pairs.
      * It will be equivalent to the number of leaves under this node.
      *
      * @see get_i
@@ -76,7 +76,7 @@ private:
     /**
      * Supplying function for positions of each node.
      *
-     * It will get the start position of the suffix corresponding at each node and the caracter before.
+     * It will get the start position of the suffix corresponding at each node and the character before.
      *
      * @relatesalso A
      */
