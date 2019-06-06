@@ -17,14 +17,14 @@ git clone https://github.com/adrien-gide/Detect_Code_Clone.git
 ```
 ## Test
 
-After cloning the repo, you may want to test the program. You can create an executable who will run a few examples, according to the files in [Test files](Test files/).
+After cloning the repo, you may want to test the program. You can create an executable who will run a few examples, according to the files in [Test files](Test%20files/).
 To create and run all the tests : 
 ```sh
 cd Detect_Code_Clone
 make test.exe
 ./test.exe
 ```
-The framework used for the [Unit tests]( is [Catch2][catch]. It's simply a [header][header] and the usage in this project is very basic but you can see how it works on [the git][catch].
+The framework used for the [Unit tests][test] is [Catch2][catch]. It's simply a [header][header] and the usage in this project is very basic but you can see how it works on [the git][catch].
 
 ## Getting started
 
