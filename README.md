@@ -3,9 +3,7 @@ The term code clone refer to the duplicated code in a source code file. Its dete
 
 ## Requirements
 
-If you just want to use the program, there is nothing required.
-
-If you want to modify the code, you will need : 
+If you want to use the program or modify the code, you will need : 
 * a C++11 ready compiler, such as g++ 4.9 or higher, or clang 3.2 or higher.
 * the [SDSL Library][sdsl].
 
@@ -27,6 +25,35 @@ make test.exe
 The framework used for the [Unit tests][test] is [Catch2][catch]. It's simply a [header][header] and the usage in this project is very basic but you can see how it works on [the git][catch].
 
 ## Getting started
+
+### Use of the program
+
+First, you need to create the executable with :
+```sh
+cd Detect_Code_Clone
+make
+```
+The program will be used with 2 mandatory arguments, and one optionnal.
+```sh
+./repeat.exe nb_files file1 file2 ... threshold(optionnal)
+```
+* nb_files: Number of files you want to compare (can be 1)
+* file1, 2, ... : Name of the file(s). Number corresponding to the value before.
+* (optionnal) threshold: Minimum length for the repeats. default value = 2
+
+### Modifying the code
+
+There are only 3 different files : 
++ My_cst.cpp
++ My_cst.hpp
++ main.cpp
+
+The class `My_cst` inherit the sdsl-lite class `cst_sct3`. It allows us to use the methods provided by this class, 
+
+
+
+
+
 
 [sdsl]: https://github.com/simongog/sdsl-lite "Git SDSL"
 [catch]: https://github.com/catchorg/Catch2 "Git Catch"

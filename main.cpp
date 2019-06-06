@@ -21,8 +21,6 @@ int main(int argc, char* argv[])
         return 1;
     }
     
-    cout <<argc<<endl;
-    cout<<atoi(argv[1])<<endl;
     if (atoi(argv[1]) == 1)
     {
         if (argc== atoi(argv[1])+1)
