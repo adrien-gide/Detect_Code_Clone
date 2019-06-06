@@ -28,7 +28,7 @@ The framework used for the [Unit tests]( is [Catch2][catch]. It's simply a [head
 
 ## Getting started
 
-[sdsl] https://github.com/simongog/sdsl-lite "Git SDSL"
-[catch] https://github.com/catchorg/Catch2 "Git Catch"
-[header] https://github.com/adrien-gide/Detect_Code_Clone/blob/master/catch.hpp "Catch file"
-[test] https://github.com/adrien-gide/Detect_Code_Clone/blob/master/test.cpp "Test file"
+[sdsl]: https://github.com/simongog/sdsl-lite "Git SDSL"
+[catch]: https://github.com/catchorg/Catch2 "Git Catch"
+[header]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/catch.hpp "Catch file"
+[test]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/test.cpp "Test file"
