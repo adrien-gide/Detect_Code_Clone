@@ -3,7 +3,7 @@ The term code clone refer to the duplicated code in a source code file. Its dete
 
 ## Requirements
 
-If you just want to use the program, there is no nothing required.
+If you just want to use the program, there is nothing required.
 
 If you want to modify the code, you will need : 
 * a C++11 ready compiler, such as g++ 4.9 or higher, or clang 3.2 or higher.
