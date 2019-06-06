@@ -15,31 +15,45 @@ int main(int argc, char* argv[])
     clock_t time;
     time = clock();
 
-    if(argc < 2)
+    if(argc < 3)
     {
-        cout << " usage: " << argv[0] << " file threshold(default 2)" << endl;
+        cout << " usage: " << argv[0] << " number of files file(s) threshold(default 2)" << endl;
         return 1;
     }
     
-    
-    ifstream f(argv[1]);
-    if (!f)
+    cout <<argc<<endl;
+    cout<<atoi(argv[1])<<endl;
+    if (atoi(argv[1]) == 1)
     {
-        cout << " usage: " << argv[0] << " file threshold(default 2)" << endl;
-        return 1;
-    }
-    else
-    {
-        if (argc==2)
+        if (argc== atoi(argv[1])+1)
             test.repeat(argv[1]);
         else
             test.repeat(argv[1],atoi(argv[2]));
+    }
+    else
+    {
+        set<string> files;
+        for (int i = 2; i < 2+atoi(argv[1]);i++)
+        {
+            ifstream f(argv[i]);
+            if (!f)
+            {
+                cout << " usage: " << argv[0] << " number of files file(s) threshold(default 2)" << endl;
+                return 1;
+            }
+            files.insert(argv[i]);
+        }
+        
+        if (argc==atoi(argv[1])+2)
+            test.compare(files);
+        else
+            test.compare(files,atoi(argv[argc-1]));
     }
     
     test.printlist();
     
     
-    cout << "Time: " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+    cout << "Time: " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s) "<< endl;
 
     return 0;
 }
