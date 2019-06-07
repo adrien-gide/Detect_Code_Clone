@@ -1,4 +1,4 @@
-# Detect Code Clone
+# Duplifinder
 The term code clone refer to the duplicated code in a source code file. Its detection can lead to debug, to refactoring. It can be also used in order to avoid plagiarism or copyright violation.
 
 ## Context
