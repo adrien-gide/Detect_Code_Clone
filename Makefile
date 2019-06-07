@@ -14,16 +14,16 @@ CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
 #PROGRAM_OPTIONS= -DMEMORY_MAX_GB=64
 
 
-SOURCES= test.cpp My_cst.cpp
+SOURCES= test.cpp Duplifinder.cpp
 
 all: repeat.exe
 
-$(SOURCES): My_cst.hpp catch.hpp
+$(SOURCES): Duplifinder.hpp catch.hpp
 
 test.exe: $(SOURCES)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
-repeat.exe: main.cpp My_cst.cpp
+repeat.exe: main.cpp Duplifinder.cpp
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
 clean:

@@ -7,12 +7,12 @@
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "My_cst.hpp"
+#include "Duplifinder.hpp"
 #include <time.h>
 
 TEST_CASE("One file")
 {
-    My_cst test;
+    Duplifinder test;
     clock_t time;
     time = clock();
 
@@ -40,7 +40,7 @@ TEST_CASE("One file")
 
 TEST_CASE("Multiple files")
 {
-    My_cst test;
+    Duplifinder test;
     clock_t time;
     time = clock();
     std::set<std::string> files;

@@ -1,5 +1,5 @@
 //
-//  My_cst.hpp
+//  Duplifinder.hpp
 //  
 //
 //  Created by Adrien Gide on 2019/05/21.
@@ -17,7 +17,7 @@
 
 typedef sdsl::cst_sct3<> cst_t;
 
-class My_cst : public cst_t
+class Duplifinder : public cst_t
 {
 public:
     typedef sdsl::cst_bfs_iterator<cst_t> iterator;

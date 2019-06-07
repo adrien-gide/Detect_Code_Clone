@@ -1,15 +1,15 @@
 /**
  *
- * My_cst.cpp
+ * Duplifinder.cpp
  * Created by Adrien Gide on 2019/05/21.
  */
 
-#include "My_cst.hpp"
+#include "Duplifinder.hpp"
 
 using namespace sdsl;
 using namespace std;
 
-void My_cst::repeat(const char* name_file,int threshold)
+void Duplifinder::repeat(const char* name_file,int threshold)
 {
     name_f = name_file;
     construct(cst, name_file,1);
@@ -52,7 +52,7 @@ void My_cst::repeat(const char* name_file,int threshold)
         }
 }
 
-void My_cst::A(node_type v)
+void Duplifinder::A(node_type v)
 {
     pos_type::iterator it;
     vector<pair<char,int>> vect;
@@ -99,7 +99,7 @@ void My_cst::A(node_type v)
         }
 }
 
-bool My_cst::get_i( node_type v)
+bool Duplifinder::get_i( node_type v)
 {
     
     ifstream is(name_f);
@@ -128,7 +128,7 @@ bool My_cst::get_i( node_type v)
     return false;
 }
 
-void My_cst::printlist()
+void Duplifinder::printlist()
 {
     //    for (pos_type::iterator it=map_pos.begin(); it!=map_pos.end(); it++)
     //    {
@@ -164,7 +164,7 @@ void My_cst::printlist()
 
 
 
-void My_cst::compare(set<string> files, int threshold)
+void Duplifinder::compare(set<string> files, int threshold)
 {
     ofstream merge("Test files/tmp.txt", ios_base::binary);
     

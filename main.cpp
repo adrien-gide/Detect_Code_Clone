@@ -5,19 +5,19 @@
 //  Created by Adrien Gide on 2019/06/03.
 //
 //
-#include "My_cst.hpp"
+#include "Duplifinder.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    My_cst test;
+    Duplifinder test;
     clock_t time;
     time = clock();
 
     if(argc < 3)
     {
-        cout << " usage: " << argv[0] << " number of files file(s) threshold(default 2)" << endl;
+        cout << " usage: " << argv[0] << " number of files file(s) int(min depth: default 2)" << endl;
         return 1;
     }
     
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
             ifstream f(argv[i]);
             if (!f)
             {
-                cout << " usage: " << argv[0] << " number of files file(s) threshold(default 2)" << endl;
+                cout << " usage: " << argv[0] << " number of files file(s) int(min depth: default 2)" << endl;
                 return 1;
             }
             files.insert(argv[i]);
