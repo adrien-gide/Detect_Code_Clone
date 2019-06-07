@@ -52,7 +52,7 @@ There are only 3 different files :
 + main.cpp
 
 The class `My_cst` inherit the sdsl-lite class `cst_sct3`. It allows us to use the methods and the types provided by this class. 
-The function are documented in.
+The function are documented in a Doxygen generated [doc][doc].
 
 
 
@@ -64,4 +64,4 @@ The function are documented in.
 [catch]: https://github.com/catchorg/Catch2 "Git Catch"
 [header]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/catch.hpp "Catch file"
 [test]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/test.cpp "Test file"
-
+[doc]: https://adrien-gide.github.io/Detect_Code_Clone/
