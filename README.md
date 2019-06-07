@@ -1,6 +1,9 @@
 # Detect Code Clone
 The term code clone refer to the duplicated code in a source code file. Its detection can lead to debug, to refactoring. It can be also used in order to avoid plagiarism or copyright violation.
 
+## Context
+This project was a part of an intership I've made during Summer 2019, in AIST Kansai. The purpose of this subject was to create a tool in order to detect the duplicated code in a source code. The first step was to detect the exact matching pairs. The structure I'm using is a suffix tree, a compressed suffix tree. The algorithm i have implemented is drawn from [an lecture note][drop] (p. 18-20) who introduce and explain the role of suffix trees in matching pairs detection.
+
 ## Requirements
 
 If you want to use the program or modify the code, you will need : 
@@ -35,7 +38,7 @@ make
 ```
 The program will be used with 2 mandatory arguments, and one optionnal.
 ```sh
-./repeat.exe nb_files file1 file2 ... threshold(optionnal)
+./repeat.exe nb_files file1 file2 ... (threshold)
 ```
 * nb_files: Number of files you want to compare (can be 1)
 * file1, 2, ... : Name of the file(s). Number corresponding to the value before.
@@ -48,14 +51,17 @@ There are only 3 different files :
 + My_cst.hpp
 + main.cpp
 
-The class `My_cst` inherit the sdsl-lite class `cst_sct3`. It allows us to use the methods provided by this class, 
+The class `My_cst` inherit the sdsl-lite class `cst_sct3`. It allows us to use the methods and the types provided by this class. 
+The function are documented in.
 
 
 
 
 
 
+[drop]: https://www.dropbox.com/s/mjvccs6hq69cage/05-SuffixTrees.pdf?dl=0 "Lecture note"
 [sdsl]: https://github.com/simongog/sdsl-lite "Git SDSL"
 [catch]: https://github.com/catchorg/Catch2 "Git Catch"
 [header]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/catch.hpp "Catch file"
 [test]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/test.cpp "Test file"
+

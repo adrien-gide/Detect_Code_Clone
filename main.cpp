@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     test.printlist();
     
     
-    cout << "Time: " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s) "<< endl;
+    cout << "Time: " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
 
     return 0;
 }
