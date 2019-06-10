@@ -32,6 +32,7 @@ private:
     results_type results_array;
     const char* name_f;
     std::string origin;
+    std::vector<int> lg_vect;
     
 public:
     /**

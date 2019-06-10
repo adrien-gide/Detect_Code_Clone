@@ -152,10 +152,20 @@ void Duplifinder::printlist()
                 for(int i=it->second.begin()->first.first-1; i<it->second.begin()->first.second; i++)
                     cout<< origin[i];
                 cout << "\n" << endl;
+                if( !lg_vect.empty())
+                    for(int l : lg_vect)
+                    {
+                        if (it->second.begin()->first.first <= l && it->second.begin()->second.first <= l )
+                        {
+                            
+                        }
+                        else if (
+                    }
                 //                for (pair<pair<int,int>,pair<int,int>> p : it->second)
                 //                    cout<< "  result: [ (" << p.first.first << "," << p.first.second << "), (" << p.second.first << "," << p.second.second << ") ]" << endl;
             }
         }
+        
     }
     else
         cout << "No maximal pair(s) for this threshold !" << endl;
@@ -170,10 +180,10 @@ void Duplifinder::compare(set<string> files, int threshold)
     
     for (string f : files)
     {
-        ifstream tmp(f, ios_base::in);
+        ifstream tmp(f, ios_base::binary);
         merge << tmp.rdbuf();
+        lg_vect.push_back(tmp.tellg());
         tmp.close();
-        
     }
     merge.close();
     

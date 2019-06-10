@@ -14,14 +14,14 @@ If you want to use the program or modify the code, you will need :
 
 Just cloning the repo will do the work : 
 ```sh
-git clone https://github.com/adrien-gide/Detect_Code_Clone.git
+git clone https://github.com/adrien-gide/Duplifinder.git
 ```
 ## Test
 
 After cloning the repo, you may want to test the program. You can create an executable who will run a few examples, according to the files in [Test files](Test%20files/).
 To create and run all the tests : 
 ```sh
-cd Detect_Code_Clone
+cd Duplifinder
 make test.exe
 ./test.exe
 ```
@@ -33,15 +33,21 @@ The framework used for the [Unit tests][test] is [Catch2][catch]. It's simply a 
 
 First, you need to create the executable with :
 ```sh
-cd Detect_Code_Clone
+cd Duplifinder
 make
 ```
-The program will be used with 2 mandatory arguments, and one optionnal.
+The program will be used with 2 mandatory arguments, and one optionnal. There is also 2 different uses of the program :
+
++ Detecting the repeat in only one file 
 ```sh
-./repeat.exe nb_files file1 file2 ... (threshold)
+./repeat.exe 1 file_name (threshold)
 ```
-* nb_files: Number of files you want to compare (can be 1)
-* file1, 2, ... : Name of the file(s). Number corresponding to the value before.
++ Compare files in order to detect the similarities
+```sh
+./repeat.exe nb_files file_name1 file_name2 ... (threshold)
+```
+* nb_files: Number of files you want to compare
+* file_name1, 2, ... : Name of the file(s). Number corresponding to the value before.
 * (optionnal) threshold: Minimum length for the repeats. default value = 2
 
 ### Modifying the code
