@@ -38,11 +38,11 @@ make
 ```
 The program will be used with 2 mandatory arguments, and one optionnal. There is also 2 different uses of the program :
 
-+ Detecting the repeat in only one file 
+  + Detecting the repeat in only one file 
 ```sh
 ./repeat.exe 1 file_name (threshold)
 ```
-+ Compare files in order to detect the similarities
+  + Compare files in order to detect the similarities
 ```sh
 ./repeat.exe nb_files file_name1 file_name2 ... (threshold)
 ```
