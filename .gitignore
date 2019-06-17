@@ -1,6 +1,8 @@
 .DS_Store
 *.exe
-Test files/tmp.txt
+tmp.txt
+tmp2.txt
 html/
 latex/
 doc/
+*.sdsl

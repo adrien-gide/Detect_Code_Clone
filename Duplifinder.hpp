@@ -9,6 +9,8 @@
 #define repeat_hpp
 #pragma once
 
+#define TMP_FILE "Test files/tmp2.txt"
+
 #include <stdio.h>
 #include <iostream>
 #include <sdsl/suffix_trees.hpp>
@@ -16,13 +18,15 @@
 #include <string>
 
 typedef sdsl::cst_sct3<> cst_t;
+//typedef sdsl::cst_sada<> cst_t;
+
 
 class Duplifinder : public cst_t
 {
 public:
     typedef sdsl::cst_bfs_iterator<cst_t> iterator;
-    typedef std::map<size_type, std::vector<std::pair<char,int>> > pos_type;
-    typedef std::map<size_type, std::set<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
+    typedef std::unordered_map<size_type, std::set<std::pair<char,int>> > pos_type;
+    typedef std::unordered_map<size_type, std::set<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
 
 private:
     
@@ -30,9 +34,10 @@ private:
     std::pair<char,int> position;
     pos_type map_pos;
     results_type results_array;
-    const char* name_f;
     std::string origin;
-    std::vector<int> lg_vect;
+    std::map<std::string,int> lg_map;
+    bool mult = false;
+    int lg_max = 0;
     
 public:
     /**
@@ -40,8 +45,9 @@ public:
      *
      * This will create a compressed suffix tree for the file we want to test. It will also traverse it in order to find the repeats on the file.
      * \param threshold Minimum length for the repeat
+     * \param multple Indicate if we have multiple files
      */
-    void repeat(const char* name_file,int threshold=2);
+    void repeat(const char* name_file,unsigned int threshold=2, bool multiple=false);
 
     /**
      * \brief Display function
@@ -59,7 +65,7 @@ public:
      * \param threshold Minimum length for the repeat
      * \see repeat
      */
-    void compare(std::set<std::string> files, int threshold=2);
+    void compare(std::set<std::string> files, unsigned int threshold=2);
     
 private:
     /**
@@ -70,7 +76,7 @@ private:
      * \see get_i
      */
     
-    void A(node_type v);
+    std::set<std::pair<char,int> > A(node_type v);
     
     /**
      * \brief Supplying function for positions of each node.

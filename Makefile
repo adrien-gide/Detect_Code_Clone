@@ -9,22 +9,26 @@ MY_CXX_OPT_FLAGS= -Wall -Os
 MY_CXX=g++
 CXX_FLAGS= $(MY_CXX_FLAGS) $(MY_CXX_OPT_FLAGS) $(INC_DIR) $(LIB_DIR)
 CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
+		-lboost_filesystem -lboost_system \
 		#-lomp \
 
 #PROGRAM_OPTIONS= -DMEMORY_MAX_GB=64
 
 
-SOURCES= test.cpp Duplifinder.cpp
+TEST= test.cpp Duplifinder.cpp
+MAIN= main.cpp Duplifinder.cpp
 
 all: repeat.exe
 
-$(SOURCES): Duplifinder.hpp catch.hpp
+$(TEST): Duplifinder.hpp catch.hpp
+$(MAIN): Duplifinder.hpp
 
-test.exe: $(SOURCES)
+test.exe: $(TEST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
-repeat.exe: main.cpp Duplifinder.cpp
+repeat.exe: $(MAIN)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
+
 
 clean:
 	rm -f *.exe
