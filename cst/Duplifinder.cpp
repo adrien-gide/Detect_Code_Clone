@@ -33,7 +33,7 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
         string tmp( (istreambuf_iterator<char>(is) ), (istreambuf_iterator<char>()  ));
         
         origin = tmp;
-        cout << "Time A : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+        cout<<tmp.size()<<endl;
 
         for(iterator w=begin; w != end; w++)
         {
@@ -44,14 +44,14 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
                     {
                         set<pair< pair<int,int>, pair<int,int>> > tmp;
                         pos_type res_A;
-                        
-                        for (auto& child : cst.children(*w))
+                        for (auto child : cst.children(*w))
                             res_A.insert(make_pair(cst.id(child),A(child)));
                         
 //                        cout << " Remaining: "<< cst.nodes() - d;
-//
+
 //                        cout << " - passed: " << d <<  " - Time at step : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
-                        /// Loops on each children pair for a node
+                        // Loops on each children pair for a node
+                        // origin[index - 1]
                         for(int k = 1; k <= cst.degree(*w);k++)
                         {
                             for(int l = k+1; l <= cst.degree(*w); l++)
@@ -61,11 +61,11 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
                                 
                                 if( !res_A[cst.id(v_f)].empty() )
                                     if(!res_A[cst.id(v_g)].empty() )
-                                        for( pair<char,int> i : res_A[cst.id(v_f)])
-                                            for( pair<char,int> j : res_A[cst.id(v_g)])
-                                                if (j.first!=i.first)
+                                        for( int i : res_A[cst.id(v_f)])
+                                            for( int j : res_A[cst.id(v_g)])
+                                                if (origin[i - 2]!=origin[j - 2])
                                                 {
-                                                    pair< pair<int,int>, pair<int,int>> p = make_pair( make_pair(i.second, i.second+cst.depth(*w)-1), make_pair(j.second, j.second+cst.depth(*w)-1));
+                                                    pair< pair<int,int>, pair<int,int>> p = make_pair( make_pair(i, i+cst.depth(*w)-1), make_pair(j, j+cst.depth(*w)-1));
                                                     if(multiple)
                                                     {
                                                         for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
@@ -79,40 +79,37 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
                         }
                         if(!(tmp.empty()))
                         {
-                            cout << "\nRepeat string :";
+                            cout << "\n\e[4mRepeat string :\e[0m";
                             for(int i=tmp.begin()->first.first-1; i<tmp.begin()->first.second; i++)
                                 cout<< origin[i];
                             cout<<endl;
                             
-                            cout << "\n  - Length of the repeat string : " << cst.depth(*w)<< endl;
-                            cout << "  - Occurences (including repeats in a same file): " << cst.size(*w)<<endl;
+                            cout << "  - \e[3mLength of the repeat string\e[0m : " << cst.depth(*w)<< endl;
+                            cout << "  - \e[3mOccurences (including repeats in a same file)\e[0m: " << cst.size(*w)<<endl;
                             
                             if(multiple)
                             {
-                                if(mult)
+                                set<string> tmp2;
+                                cout << "  - \e[3mInside these files\e[0m : " << endl;
+                                int val = 0;
+                                for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
                                 {
-                                    set<string> tmp2;
-                                    cout << "  - Inside these files : " << endl;
-                                    int val = 0;
-                                    for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
+                                    for(pair< pair<int,int>, pair<int,int>> p : tmp)
                                     {
-                                        for(pair< pair<int,int>, pair<int,int>> p : tmp)
-                                        {
-                                            if ( p.first.first <= lg->second && p.first.first >= val )
-                                                tmp2.insert(lg->first);
-                                            
-                                            if(p.second.first <= lg->second && p.second.first >= val )
-                                                tmp2.insert(lg->first);
-                                        }
-                                        val = lg->second;
+                                        if ( p.first.first <= lg->second && p.first.first >= val )
+                                            tmp2.insert(lg->first);
+                                        
+                                        if ( p.second.first <= lg->second && p.second.first >= val )
+                                            tmp2.insert(lg->first);
                                     }
-                                    
-                                    for( string f : tmp2)
-                                        cout << "      - "<< f << endl;
-                                    
-                                    cout<<"\n"<<endl;
-                                    
+                                    val = lg->second;
                                 }
+                                
+                                for( string f : tmp2)
+                                    cout << "      - "<< f << endl;
+                                
+                                cout<<"\n"<<endl;
+                                    
                                 
                             }
                         }
@@ -125,10 +122,10 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
     is.close();
 }
 
-set<pair<char,int> > Duplifinder::A(node_type v)
+set<int> Duplifinder::A(node_type v)
 {
     pos_type::iterator it;
-    set<pair<char,int> > s;
+    set<int> s;
     if(cst.is_leaf(v))
     {
         if(get_i(v) && cst.id(cst.parent(v))!=cst.id(cst.root()))
@@ -138,11 +135,11 @@ set<pair<char,int> > Duplifinder::A(node_type v)
         }
     }
     else
-        for(auto& child : cst.children(v))
+        for(auto child : cst.children(v))
         {
-            set<pair<char, int>> tmp = A(child);
+            set<int> tmp = A(child);
             
-            for(pair<char,int> p : tmp)
+            for(int p : tmp)
                 s.insert(p);
             
             return s;
@@ -159,7 +156,7 @@ bool Duplifinder::get_i( node_type v)
     
     
     //                    cout << origin[index - 1] <<endl;
-    position = make_pair(origin[index - 1] ,index+1);
+    position = index+1;
     
     //                    for(int i=index; i<length; i++)
     //                        cout << origin[i];
@@ -226,11 +223,10 @@ void Duplifinder::printlist()
         cout << "No maximal pair(s) for this threshold ! " << endl;
 }
 
-
-
 void Duplifinder::compare(set<string> files, unsigned int threshold)
 {
-    ofstream merge(TMP_FILE, ios_base::binary);
+    ofstream merge(TMP_FILE2, ios_base::binary);
+    clock_t time =clock();
     
     double lg = 0;
     int id = 0;
@@ -239,7 +235,7 @@ void Duplifinder::compare(set<string> files, unsigned int threshold)
         ifstream tmp(f, ios_base::binary);
         if (tmp.good())
         {
-            merge << tmp.rdbuf() << "\n$id$: " << id++ << endl;
+            merge << tmp.rdbuf() << "\n$id$:" << id++ << endl;
             lg += tmp.tellg();
             lg_map.insert(make_pair(f,lg));
             if (lg_max <= tmp.tellg())
@@ -247,10 +243,10 @@ void Duplifinder::compare(set<string> files, unsigned int threshold)
         }
         tmp.close();
     }
-    cout << lg_max <<endl;
-    cout << "Time concat : " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+    cout << "Time concat : " << ( clock() - time)/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
     mult = true;
-    repeat(TMP_FILE, threshold, mult);
-    
+    repeat(TMP_FILE2, threshold, mult);
 }
+
+

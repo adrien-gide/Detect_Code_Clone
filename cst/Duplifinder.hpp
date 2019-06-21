@@ -5,11 +5,11 @@
 //  Created by Adrien Gide on 2019/05/21.
 //
 
-#ifndef repeat_hpp
-#define repeat_hpp
+#ifndef Duplifinder_hpp
+#define Duplifinder_hpp
 #pragma once
 
-#define TMP_FILE "Test files/tmp2.txt"
+#define TMP_FILE2 "Test files/tmp.txt"
 
 #include <stdio.h>
 #include <iostream>
@@ -17,21 +17,22 @@
 #include <vector>
 #include <string>
 
-typedef sdsl::cst_sct3<> cst_t;
-//typedef sdsl::cst_sada<> cst_t;
+
+//typedef sdsl::cst_sct3<> cst_t;
+typedef sdsl::cst_sada<> cst_t;
 
 
 class Duplifinder : public cst_t
 {
 public:
     typedef sdsl::cst_bfs_iterator<cst_t> iterator;
-    typedef std::unordered_map<size_type, std::set<std::pair<char,int>> > pos_type;
+    typedef std::unordered_map<size_type, std::set<int> > pos_type;
     typedef std::unordered_map<size_type, std::set<std::pair< std::pair<int,int>, std::pair<int,int>> > > results_type;
 
 private:
     
     cst_t cst;
-    std::pair<char,int> position;
+    int position;
     pos_type map_pos;
     results_type results_array;
     std::string origin;
@@ -76,7 +77,7 @@ private:
      * \see get_i
      */
     
-    std::set<std::pair<char,int> > A(node_type v);
+    std::set<int > A(node_type v);
     
     /**
      * \brief Supplying function for positions of each node.

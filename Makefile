@@ -15,20 +15,26 @@ CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
 #PROGRAM_OPTIONS= -DMEMORY_MAX_GB=64
 
 
-TEST= test.cpp Duplifinder.cpp
-MAIN= main.cpp Duplifinder.cpp
+TEST= test.cpp cst/Duplifinder.cpp simple_st/Node.cpp simple_st/Suffix.cpp simple_st/SuffixTree.cpp
+CST= cst/*.cpp
+ST= simple_st/*.cpp
 
-all: repeat.exe
+all: cst.exe test.exe st.exe
 
-$(TEST): Duplifinder.hpp catch.hpp
-$(MAIN): Duplifinder.hpp
+$(TEST): cst/*.hpp catch.hpp simple_st/*.h
+$(CST): cst/*.hpp
+$(ST): simple_st/*.h
 
 test.exe: $(TEST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
-repeat.exe: $(MAIN)
+cst.exe: $(CST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
+
+st.exe: $(ST)
+	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
 
 clean:
 	rm -f *.exe
+	rm -f *.sdsl

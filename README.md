@@ -36,7 +36,7 @@ First, you need to create the executable with :
 cd Duplifinder
 make
 ```
-The program will be used with 2 mandatory arguments, and one optionnal. There is also 2 different uses of the program :
+In order to use the program, you need to be aware of the different identifier
 
   + Detecting the repeat in only one file 
 ```sh
