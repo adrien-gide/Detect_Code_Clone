@@ -43,25 +43,25 @@ make
 It will create the 2 main program : `cst.exe` and `st.exe`. Both of them implement the same algorithm, but the first is using compressed suffix tree and the other normal suffix tree. The implementation of simple suffix tree is the one from [adamserafini's github][adam].
 
 In order to use the programs, you need to be aware of the different identifier available. You need to use one of them in order to specify the kind of operation you want to do.
-+ Specifiers :
-    * -s : For a single file
-    * -m : For multiple files indicated in commend line
-    * -r : For a repository
+* Specifiers :
+    + -s : For a single file
+    + -m : For multiple files indicated in commend line
+    + -r : For a repository
 
 
 Hence, you have multiple uses of the executables : 
-+ Detecting the repeat in only one file 
+* Detecting the repeat in only one file 
 ```sh
 .exe -s file_name (threshold)
 ```
-  + Compare files in order to detect the similarities
+* Compare files in order to detect the similarities :
+    + nb_files: Number of files you want to compare
+    + file_name1, 2, ... : Name of the file(s). Number corresponding to the value before.
+
 ```sh
 .exe -m nb_files file_name1 file_name2 ... (threshold)
 ```
-    * nb_files: Number of files you want to compare
-    * file_name1, 2, ... : Name of the file(s). Number corresponding to the value before.
-
-+ Traverse a directory in order to compare the source code (you specify the types in the main)
+* Traverse a directory in order to compare the source code (you specify the types in the main) :
 ```sh
 .exe -r directory_name (threshold)
 ```
@@ -74,18 +74,18 @@ There are only 2 different parts :
 * st : Implementation using [normal suffix tree][adam]. Time efficient, will run in a few minutes for big directories. Memory-expensive.
 Modified files from [original git][adam] :
 
-        + SuffixTree.cpp
-        + SuffixTree.hpp
-        + Node.cpp
-        + Node.hpp
-        + main.cpp
+    + SuffixTree.cpp
+    + SuffixTree.hpp
+    + Node.cpp
+    + Node.hpp
+    + main.cpp
 
 * cst : implementation using [compressed suffix tree][sdsl]. Slower than the second one, especially for big directories (can take hours and hours in some cases). Less memory-expensive. Can be prefered for small files.
 Source files : 
         
-        + Duplifinder.cpp
-        + Duplifinder.hpp
-        + main.cpp
+    + Duplifinder.cpp
+    + Duplifinder.hpp
+    + main.cpp
 
 The class `Duplifinder` inherit the sdsl-lite class `cst_sct3`. It allows us to use the methods and the types provided by this class. 
 The function are documented in a Doxygen generated [doc][doc].
