@@ -71,7 +71,7 @@ Hence, you have multiple uses of the executables :
 ### Modifying the code
 
 There are only 2 different parts :
-* st : Implementation using [normal suffix tree][adam]. Time efficient, will run in a few minutes for big directories. Memory-expensive.
+* st : Implementation using [normal suffix tree][adam]. Time efficient, will run in a few minutes for big directories. Memory-expensive.  
 Modified files from [original git][adam] :
 
     + SuffixTree.cpp
