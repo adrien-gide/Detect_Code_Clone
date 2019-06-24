@@ -19,7 +19,9 @@ TEST= test.cpp cst/Duplifinder.cpp simple_st/Node.cpp simple_st/Suffix.cpp simpl
 CST= cst/*.cpp
 ST= simple_st/*.cpp
 
-all: cst.exe test.exe st.exe
+all: cst.exe st.exe
+
+test: test.exe
 
 $(TEST): cst/*.hpp catch.hpp simple_st/*.h
 $(CST): cst/*.hpp
