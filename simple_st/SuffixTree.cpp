@@ -147,25 +147,10 @@ std::string SuffixTree::log_node(Node* parent) {
     return buffer.str();
 }
 
-template <typename T>
-std::pair<T, bool> getNthElement(std::set<T> & searchSet, int n)
-{
-    std::pair<T, bool> result;
-    if(searchSet.size() > n )
-    {
-        result.first = *(std::next(searchSet.begin(), n));
-        result.second = true;
-    }
-    else
-        result.second = false;
-    
-    return result;
-}
 
-void SuffixTree::loop(Node* v,int threshold, bool multiple)
+void SuffixTree::loop(Node* v,int lower_bound,unsigned int upper_bound, bool multiple)
 {
     v->breath=v->edge_length()+v->parent->breath;
-//    cout << v->ID << " ::: " << v->breath << endl;
     
     if(v->is_leaf())
         v->res_A.insert(length - v->breath);
@@ -175,14 +160,13 @@ void SuffixTree::loop(Node* v,int threshold, bool multiple)
         {
             v->labels.push_back(it->first);
             if (it->second->res_A.empty())
-                loop(it->second,threshold,multiple);
+                loop(it->second,lower_bound,upper_bound,multiple);
 
             for (int i : it->second->res_A)
                 v->res_A.insert(i);
         }
         
-        
-        if(v->breath>=threshold)
+        if(v->breath>=lower_bound && v->breath<=upper_bound )
         {
             set<pair< pair<int,int>, pair<int,int> > > tmp;
             for(int k = 0; k < v->labels.size();k++)
@@ -191,18 +175,12 @@ void SuffixTree::loop(Node* v,int threshold, bool multiple)
                     Node* v_f = v->children[v->labels[k]];
                     Node* v_g = v->children[v->labels[l]];
                     
-//                    for (int e : v_f->res_A)
-//                        cout<< v->ID<<"  f: "<<e<<endl;
-//
-//                    for (int f : v_g->res_A)
-//                        cout<<"  g: "<<f<<endl;
                     
                     if(!v_f->res_A.empty() && !v_g->res_A.empty())
                     {
                         for( int i : v_f->res_A)
                             for( int j : v_g->res_A)
                             {
-//                                cout<<":      " <<tree_string[i-1] << " :: "<< tree_string[j-1]<<endl;
                                 if (tree_string[i-1]!=tree_string[j-1])
                                 {
                                     pair< pair<int,int>, pair<int,int>> p = make_pair( make_pair(j, j+v->breath-1), make_pair(i, i+v->breath-1));
@@ -263,7 +241,7 @@ void SuffixTree::loop(Node* v,int threshold, bool multiple)
 }
 
 
-void SuffixTree::repeat(const char* name_file, int threshold, bool multiple)
+void SuffixTree::repeat(const char* name_file, int lower_bound,unsigned int upper_bound, bool multiple)
 {
     ifstream is(name_file);
     
@@ -280,13 +258,13 @@ void SuffixTree::repeat(const char* name_file, int threshold, bool multiple)
         
         
         for (; it!=root->children.end(); it++)
-            loop(it->second, threshold,multiple);
+            loop(it->second, lower_bound,upper_bound,multiple);
     }
     is.close();
     
 }
 
-void SuffixTree::compare(set<string> files,int threshold)
+void SuffixTree::compare(set<string> files,int lower_bound,unsigned int upper_bound)
 {
     ofstream merge(TMP_FILE, ios_base::binary);
     
@@ -307,5 +285,5 @@ void SuffixTree::compare(set<string> files,int threshold)
     cout << "Time concat : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
     
-    repeat(TMP_FILE,threshold,true);
+    repeat(TMP_FILE,lower_bound,true);
 }

@@ -30,7 +30,7 @@ TEST_CASE("CST_1")
 //        test.printlist();
     }
     SECTION( "Code" ) {
-        test.repeat("Test files/Test4.js",274);
+        test.repeat("Test files/Test4.js",200);
 //        test.printlist();
     }
 
@@ -61,13 +61,13 @@ TEST_CASE("CST_MULT")
     SECTION( "2 files - Multiple lines" ) {
         files.insert("Test files/Test7_1.txt");
         files.insert("Test files/Test7_2.txt");
-        test.compare(files,10);
+        test.compare(files,8,10);
 //        test.printlist();
     }
     SECTION( "2 files - Source code files" ) {
         files.insert("Test files/Test8_1.cs");
         files.insert("Test files/Test8_2.cs");
-        test.compare(files,20);
+        test.compare(files,20,30);
 //        test.printlist();
     }
 
@@ -95,7 +95,7 @@ TEST_CASE("ST_1")
         //        test.printlist();
     }
     SECTION( "Code" ) {
-        test.repeat("Test files/Test4.js",274);
+        test.repeat("Test files/Test4.js",200);
         //        test.printlist();
     }
     
@@ -126,13 +126,13 @@ TEST_CASE("ST_MULT")
     SECTION( "Multiple" ) {
         files.insert("Test files/Test7_1.txt");
         files.insert("Test files/Test7_2.txt");
-        test.compare(files,10);
+        test.compare(files,8,10);
         //        test.printlist();
     }
     SECTION( "Code" ) {
         files.insert("Test files/Test8_1.cs");
         files.insert("Test files/Test8_2.cs");
-        test.compare(files,20);
+        test.compare(files,20,30);
         //        test.printlist();
     }
     

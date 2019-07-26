@@ -11,27 +11,6 @@
 using namespace std;
 using namespace boost;
 
-void process_mem_usage(double& vm_usage, double& resident_set)
-{
-    vm_usage     = 0.0;
-    resident_set = 0.0;
-    
-    // the two fields we want
-    unsigned long vsize;
-    long rss;
-    {
-        std::string ignore;
-        std::ifstream ifs("/proc/self/stat", std::ios_base::in);
-        ifs >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore
-        >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore >> ignore
-        >> ignore >> ignore >> vsize >> rss;
-    }
-    
-    long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
-    vm_usage = vsize / 1024.0;
-    resident_set = rss * page_size_kb;
-}
-
 int main(int argc, char* argv[])
 {
   
@@ -49,7 +28,7 @@ int main(int argc, char* argv[])
     
     if(argc < 3)
     {
-        cout << " usage: " << argv[0] << " identifier file(s) int(min depth: default 2)" << endl;
+        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
         return 1;
     }
 
@@ -57,15 +36,17 @@ int main(int argc, char* argv[])
     {
         if (argc == 3)
             test.repeat(argv[2]);
+        else if (argc == 5)
+            test.repeat(argv[2],atoi(argv[3]),atoi(argv[4]));
         else
-            test.repeat(argv[2],atoi(argv[4]));
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
 
     else if (strcmp(argv[1],"-c")==0)
     {
         if(argc < 4 || atoi(argv[2]) < 2)
         {
-            cout << " usage: " << argv[0] << " identifier number_of_files file(s) int(min depth: default 2)" << endl;
+            cout << " usage: " << argv[0] << " identifier number_of_files file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
             return 1;
         }
         
@@ -83,15 +64,17 @@ int main(int argc, char* argv[])
 
         if (argc==atoi(argv[2])+3)
             test.compare(setfiles,2);
+        else if (argc==atoi(argv[2])+5)
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
         else
-            test.compare(setfiles,atoi(argv[argc-1]));
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
     else if (strcmp(argv[1],"-r")==0)
     {
         set<string> setfiles;
         if (argc < 3)
         {
-            cout << "Usage: exe identifier path int(min depth: default 2)" << endl;
+            cout << "Usage: exe identifier path lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
             return 1;
         }
         system::error_code ec;
@@ -110,8 +93,10 @@ int main(int argc, char* argv[])
         
         if (argc==3)
             test.compare(setfiles,2);
+        else if (argc==5)
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
         else
-            test.compare(setfiles,atoi(argv[argc-1]));
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
     else
     {
@@ -119,20 +104,6 @@ int main(int argc, char* argv[])
         cout<< "    -r : repository\n   -c: comparison between files\n    -s: single file"<<endl;
         return 0;
     }
-    
-    double vm, rss;
-    process_mem_usage(vm, rss);
-    cout << "\nVM: " << vm << "; RSS: " << rss << endl;
-    
-    
-//    test.printlist();
-    
-//    struct statfs stats;
-//    if (0 == statfs("/", &stats))
-//    {
-//        myFreeSwap = (uint64_t)stats.f_bsize * stats.f_bfree;
-//    }
-//
     
     cout << "Time finish: " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
 

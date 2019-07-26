@@ -2,7 +2,7 @@
 The term code clone refer to the duplicated code in a source code file. Its detection can lead to debug, to refactoring. It can be also used in order to avoid plagiarism or copyright violation.
 
 ## Context
-This project was a part of an intership I've made during Summer 2019, in AIST Kansai. The purpose of this subject was to create a tool in order to detect the duplicated code in a source code. The first step was to detect the exact matching pairs. The structure I'm using is a suffix tree, a compressed suffix tree. The algorithm I have implemented is drawn from [a lecture note][drop] (p. 18-20) who introduce and explain the role of suffix trees in matching pairs detection.
+This project was a part of an intership I've made during Summer 2019, in AIST Kansai. The purpose of this subject was to create a tool in order to detect the duplicated code in a source code. The first step was to detect the exact matching pairs. The structure I'm using is a suffix tree, a compressed suffix tree. The first algorithm I have implemented is drawn from [a lecture note][drop] (p. 18-20) who introduce and explain the role of suffix trees in matching pairs detection.
 
 ## Requirements
 
@@ -52,21 +52,22 @@ In order to use the programs, you need to be aware of the different identifier a
 Hence, you have multiple uses of the executables : 
 * Detecting the repeat in only one file 
 ```sh
-.exe -s file_name (threshold)
+.exe -s file_name (lower_bound) (upper_bound)
 ```
 * Compare files in order to detect the similarities :
     + nb_files: Number of files you want to compare
     + file_name1, 2, ... : Name of the file(s). Number corresponding to the value before.
 
 ```sh
-.exe -m nb_files file_name1 file_name2 ... (threshold)
+.exe -m nb_files file_name1 file_name2 ... (lower_bound) (upper_bound)
 ```
 * Traverse a directory in order to compare the source code (you specify the types in the main) :
 ```sh
-.exe -r directory_name (threshold)
+.exe -r directory_name (lower_bound) (upper_bound)
 ```
 
-* (optionnal) threshold: Minimum length for the repeats. default value = 2
+* (optionnal) lower_bound: Minimum length for the repeats. default value = 2
+* (optionnal) upper_bound: Maximum length for the repeats. default value = 500
 
 ### Modifying the code
 
@@ -94,7 +95,7 @@ The function are documented in a Doxygen generated [doc][doc].
 [drop]: https://www.dropbox.com/s/mjvccs6hq69cage/05-SuffixTrees.pdf?dl=0 "Lecture note"
 [sdsl]: https://github.com/simongog/sdsl-lite "Git SDSL"
 [catch]: https://github.com/catchorg/Catch2 "Git Catch"
-[header]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/catch.hpp "Catch file"
-[test]: https://github.com/adrien-gide/Detect_Code_Clone/blob/master/test.cpp "Test file"
-[doc]: https://adrien-gide.github.io/Detect_Code_Clone/ "doxygen"
+[header]: https://github.com/adrien-gide/Duplifinder/blob/master/catch.hpp "Catch file"
+[test]: https://github.com/adrien-gide/Duplifinder/blob/master/test.cpp "Test file"
+[doc]: https://adrien-gide.github.io/Duplifinder/ "doxygen"
 [adam]: https://github.com/adamserafini/suffix-tree "Git suffix tree"

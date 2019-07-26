@@ -17,7 +17,7 @@ private:
     inline int edge_length() {return *end_index - begin_index + 1;}
     void add_child(const SuffixTree&, Node*);
     inline void remove_child(const SuffixTree&, Node*);
-    bool is_leaf() {return children.empty();}
+    inline bool is_leaf() {return children.empty();}
     void split_edge(const SuffixTree&, int, int);
     Node* get_child(const SuffixTree&, int char_index);
     int get_key(const SuffixTree&, Node*, int) const;

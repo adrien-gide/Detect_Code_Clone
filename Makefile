@@ -18,22 +18,27 @@ CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
 TEST= test.cpp cst/Duplifinder.cpp simple_st/Node.cpp simple_st/Suffix.cpp simple_st/SuffixTree.cpp
 CST= cst/*.cpp
 ST= simple_st/*.cpp
+LCP= lcp/*.cpp
 
-all: cst.exe st.exe
+all: ct.exe st.exe
 
 test: test.exe
 
 $(TEST): cst/*.hpp catch.hpp simple_st/*.h
 $(CST): cst/*.hpp
 $(ST): simple_st/*.h
+$(LCP): lcp/*.hpp
 
 test.exe: $(TEST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
-cst.exe: $(CST)
+ct.exe: $(CST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
 st.exe: $(ST)
+	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
+
+lcp.exe: $(LCP)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
 

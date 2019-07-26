@@ -21,9 +21,9 @@ public:
     void construct(std::string);
     std::string log_tree();
     char get_char_at_index(int) const;
-    void compare(std::set<std::string> files,int threshold=2);
-    void repeat(const char* name_file, int threshold=2, bool multiple=false);
-    void loop(Node* v,int threshold, bool multiple);
+    void compare(std::set<std::string> files,int lower_bound=2,unsigned int upper_bound=500);
+    void repeat(const char* name_file, int lower_bound=2,unsigned int upper_bound=500, bool multiple=false);
+    void loop(Node* v,int lower_bound,unsigned int upper_bound, bool multiple);
     
     
     

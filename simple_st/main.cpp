@@ -1,5 +1,7 @@
 
 #include <boost/filesystem.hpp>
+#include <sys/resource.h>
+
 #include "SuffixTree.h"
 
 
@@ -11,6 +13,15 @@ int main(int argc, char* argv[])
     SuffixTree test;
     clock_t time;
     time = clock();
+    
+    int who = RUSAGE_SELF;
+    struct rusage usage;
+    struct timeval start, end;
+    int ret;
+    
+    
+    ret = getrusage(who, &usage);
+    start = usage.ru_utime;
     //    ".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"
     
     const char* types[] = {".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"};
@@ -31,8 +42,10 @@ int main(int argc, char* argv[])
     {
         if (argc == 3)
             test.repeat(argv[2]);
+        else if (argc == 5)
+            test.repeat(argv[2],atoi(argv[4]),atoi(argv[4]));
         else
-            test.repeat(argv[2],atoi(argv[4]));
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
     
     else if (strcmp(argv[1],"-c")==0)
@@ -57,8 +70,10 @@ int main(int argc, char* argv[])
         
         if (argc==atoi(argv[2])+3)
             test.compare(setfiles,2);
+        else if (argc==atoi(argv[2])+5)
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
         else
-            test.compare(setfiles,atoi(argv[argc-1]));
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
     else if (strcmp(argv[1],"-r")==0)
     {
@@ -85,8 +100,10 @@ int main(int argc, char* argv[])
         
         if (argc==3)
             test.compare(setfiles);
+        else if (argc==5)
+        test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
         else
-            test.compare(setfiles,atoi(argv[argc-1]));
+        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
         
     }
     else
@@ -106,8 +123,12 @@ int main(int argc, char* argv[])
     //    }
     //
     
-    cout << "Time finish: " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     
+    ret = getrusage(who, &usage);
+    end = usage.ru_utime;
+    
+    cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
+    cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
+    cout << " Memory used " << usage.ru_maxrss / 1000000 << endl;
     return 0;
 }
-

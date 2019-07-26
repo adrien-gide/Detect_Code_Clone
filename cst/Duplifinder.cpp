@@ -9,7 +9,7 @@
 using namespace sdsl;
 using namespace std;
 
-void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool multiple)
+void Duplifinder::repeat(const char* name_file,unsigned int lower_bound,unsigned int upper_bound, bool multiple)
 {
     
     ifstream is(name_file);
@@ -25,7 +25,7 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
     
     cout << cst.nodes() << endl;
     cout << cst.size() << endl;
-    cout << " Threshold: "<< threshold << endl;
+    cout << " lower_bound: "<< lower_bound << endl;
     int d = 0;
     
     if (is.good())
@@ -37,92 +37,89 @@ void Duplifinder::repeat(const char* name_file,unsigned int threshold, bool mult
 
         for(iterator w=begin; w != end; w++)
         {
-            d++;
-            if (cst.id(*w)!=cst.id(cst.root()))
-                if (!cst.is_leaf(*w))
-                    if (cst.depth(*w)>=threshold)
-                    {
-                        set<pair< pair<int,int>, pair<int,int>> > tmp;
-                        pos_type res_A;
-                        for (auto child : cst.children(*w))
-                            res_A.insert(make_pair(cst.id(child),A(child)));
-                        
-//                        cout << " Remaining: "<< cst.nodes() - d;
-
-//                        cout << " - passed: " << d <<  " - Time at step : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
-                        // Loops on each children pair for a node
-                        // origin[index - 1]
-                        for(int k = 1; k <= cst.degree(*w);k++)
-                        {
-                            for(int l = k+1; l <= cst.degree(*w); l++)
-                            {
-                                auto v_f = cst.select_child(*w,l);
-                                auto v_g = cst.select_child(*w,k);
-                                
-                                if( !res_A[cst.id(v_f)].empty() )
-                                    if(!res_A[cst.id(v_g)].empty() )
-                                        for( int i : res_A[cst.id(v_f)])
-                                            for( int j : res_A[cst.id(v_g)])
-                                                if (origin[i - 2]!=origin[j - 2])
-                                                {
-                                                    pair< pair<int,int>, pair<int,int>> p = make_pair( make_pair(i, i+cst.depth(*w)-1), make_pair(j, j+cst.depth(*w)-1));
-                                                    if(multiple)
-                                                    {
-                                                        for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
-                                                            if ( ( p.first.first <= lg->second && p.second.first > lg->second) || ( p.first.first > lg->second && p.second.first <= lg->second ) )
-                                                                tmp.insert(p);
-                                                    }
-                                                    else
-                                                        tmp.insert(p);
-                                                }
-                            }
-                        }
-                        if(!(tmp.empty()))
-                        {
-                            cout << "\n\e[4mRepeat string :\e[0m";
-                            for(int i=tmp.begin()->first.first-1; i<tmp.begin()->first.second; i++)
-                                cout<< origin[i];
-                            cout<<endl;
-                            
-                            cout << "  - \e[3mLength of the repeat string\e[0m : " << cst.depth(*w)<< endl;
-                            cout << "  - \e[3mOccurences (including repeats in a same file)\e[0m: " << cst.size(*w)<<endl;
-                            
-                            if(multiple)
-                            {
-                                set<string> tmp2;
-                                cout << "  - \e[3mInside these files\e[0m : " << endl;
-                                int val = 0;
-                                for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
-                                {
-                                    for(pair< pair<int,int>, pair<int,int>> p : tmp)
-                                    {
-                                        if ( p.first.first <= lg->second && p.first.first >= val )
-                                            tmp2.insert(lg->first);
-                                        
-                                        if ( p.second.first <= lg->second && p.second.first >= val )
-                                            tmp2.insert(lg->first);
-                                    }
-                                    val = lg->second;
-                                }
-                                
-                                for( string f : tmp2)
-                                    cout << "      - "<< f << endl;
-                                
-                                cout<<"\n"<<endl;
-                                    
-                                
-                            }
-                        }
-                    }
-//                            results_array.insert( make_pair(cst.id(*w), tmp));
+            cout<<d++<<endl;
             
+//            if (cst.id(*w)!=cst.id(cst.root()))
+//                if (!cst.is_leaf(*w))
+//                    if (cst.depth(*w)>=lower_bound && cst.depth(*w)<=upper_bound)
+//                    {
+//                        set<pair< pair<int,int>, pair<int,int>> > tmp;
+//                        for (auto child : cst.children(*w))
+//                            A(child);
+//                        cout << " Remaining: "<< cst.nodes() - d;
+//
+//                        cout << " - passed: " << d <<  " - Time at step : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+//
+//                        for(int k = 1; k <= cst.degree(*w);k++)
+//                        {
+//                            for(int l = k+1; l <= cst.degree(*w); l++)
+//                            {
+//                                auto v_f = cst.select_child(*w,l);
+//                                auto v_g = cst.select_child(*w,k);
+//
+//                                if( !map_pos[cst.id(v_f)].empty() )
+//                                    if(!map_pos[cst.id(v_g)].empty() )
+//                                        for( int i : map_pos[cst.id(v_f)])
+//                                            for( int j : map_pos[cst.id(v_g)])
+//                                                if (origin[i - 2]!=origin[j - 2])
+//                                                {
+//                                                    pair< pair<int,int>, pair<int,int>> p = make_pair( make_pair(i, i+cst.depth(*w)-1), make_pair(j, j+cst.depth(*w)-1));
+//                                                    if(multiple)
+//                                                    {
+//                                                        for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
+//                                                            if ( ( p.first.first <= lg->second && p.second.first > lg->second) || ( p.first.first > lg->second && p.second.first <= lg->second ) )
+//                                                                tmp.insert(p);
+//                                                    }
+//                                                    else
+//                                                        tmp.insert(p);
+//                                                }
+//                            }
+//                        }
+//                        if(!(tmp.empty()))
+//                        {
+//                            cout << "\n\e[4mRepeat string :\e[0m";
+//                            for(int i=tmp.begin()->first.first-1; i<tmp.begin()->first.second; i++)
+//                                cout<< origin[i];
+//                            cout<<endl;
+//
+//                            cout << "  - \e[3mLength of the repeat string\e[0m : " << cst.depth(*w)<< endl;
+//                            cout << "  - \e[3mOccurences (including repeats in a same file)\e[0m: " << cst.size(*w)<<endl;
+//
+//                            if(multiple)
+//                            {
+//                                set<string> tmp2;
+//                                cout << "  - \e[3mInside these files\e[0m : " << endl;
+//                                int val = 0;
+//                                for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
+//                                {
+//                                    for(pair< pair<int,int>, pair<int,int>> p : tmp)
+//                                    {
+//                                        if ( p.first.first <= lg->second && p.first.first >= val )
+//                                            tmp2.insert(lg->first);
+//
+//                                        if ( p.second.first <= lg->second && p.second.first >= val )
+//                                            tmp2.insert(lg->first);
+//                                    }
+//                                    val = lg->second;
+//                                }
+//
+//                                for( string f : tmp2)
+//                                    cout << "      - "<< f << endl;
+//
+//                                cout<<"\n"<<endl;
+//
+//
+//                            }
+//                        }
+//                    }
+////                            results_array.insert( make_pair(cst.id(*w), tmp));
         }
-        
+//
     }
     is.close();
 }
 
-set<int> Duplifinder::A(node_type v)
+void Duplifinder::A(node_type v)
 {
     pos_type::iterator it;
     set<int> s;
@@ -131,20 +128,23 @@ set<int> Duplifinder::A(node_type v)
         if(get_i(v) && cst.id(cst.parent(v))!=cst.id(cst.root()))
         {
             s.insert(position);
-            return s;
+            map_pos.insert(make_pair(cst.id(v),s));
         }
     }
     else
         for(auto child : cst.children(v))
         {
-            set<int> tmp = A(child);
+            set<int> tmp = map_pos[cst.id(child)];
+            
+            if (tmp.empty())
+                A(child);
             
             for(int p : tmp)
                 s.insert(p);
             
-            return s;
+            map_pos.insert(make_pair(cst.id(v),s));
+            
         }
-    return s;
 }
 
 bool Duplifinder::get_i( node_type v)
@@ -153,14 +153,7 @@ bool Duplifinder::get_i( node_type v)
     int index;
     length = origin.size();
     index = length - cst.depth(v) + 1;
-    
-    
-    //                    cout << origin[index - 1] <<endl;
     position = index+1;
-    
-    //                    for(int i=index; i<length; i++)
-    //                        cout << origin[i];
-    //                    cout<< " : node "<< cst.id(v)<<endl;
     return true;
 }
 
@@ -220,10 +213,10 @@ void Duplifinder::printlist()
         
     }
     else
-        cout << "No maximal pair(s) for this threshold ! " << endl;
+        cout << "No maximal pair(s) for this interval ! " << endl;
 }
 
-void Duplifinder::compare(set<string> files, unsigned int threshold)
+void Duplifinder::compare(set<string> files, unsigned int lower_bound,unsigned int upper_bound)
 {
     ofstream merge(TMP_FILE2, ios_base::binary);
     clock_t time =clock();
@@ -246,7 +239,7 @@ void Duplifinder::compare(set<string> files, unsigned int threshold)
     cout << "Time concat : " << ( clock() - time)/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
     mult = true;
-    repeat(TMP_FILE2, threshold, mult);
+    repeat(TMP_FILE2, lower_bound,upper_bound, mult);
 }
 
 

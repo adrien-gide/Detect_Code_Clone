@@ -9,7 +9,7 @@
 #define Duplifinder_hpp
 #pragma once
 
-#define TMP_FILE2 "Test files/tmp.txt"
+#define TMP_FILE2 "tmp.txt"
 
 #include <stdio.h>
 #include <iostream>
@@ -45,10 +45,10 @@ public:
      * \brief Main fonction for the detection of code clone.
      *
      * This will create a compressed suffix tree for the file we want to test. It will also traverse it in order to find the repeats on the file.
-     * \param threshold Minimum length for the repeat
+     * \param lower_bound Minimum length for the repeat
      * \param multple Indicate if we have multiple files
      */
-    void repeat(const char* name_file,unsigned int threshold=2, bool multiple=false);
+    void repeat(const char* name_file,unsigned int lower_bound=2,unsigned int upper_bound=500, bool multiple=false);
 
     /**
      * \brief Display function
@@ -63,10 +63,10 @@ public:
      *
      * Compare multiple files by concatenate them and pass the concatenated file at the function repeat.
      * \param files Set with the names of the files we want to compare
-     * \param threshold Minimum length for the repeat
+     * \param lower_bound Minimum length for the repeat
      * \see repeat
      */
-    void compare(std::set<std::string> files, unsigned int threshold=2);
+    void compare(std::set<std::string> files, unsigned int lower_bound=2, unsigned int upper_bound=500);
     
 private:
     /**
@@ -77,7 +77,7 @@ private:
      * \see get_i
      */
     
-    std::set<int > A(node_type v);
+    void A(node_type v);
     
     /**
      * \brief Supplying function for positions of each node.
@@ -86,8 +86,7 @@ private:
      * \see A
      */
     bool get_i(node_type v);
-
 };
 
 
-#endif /* repeat_hpp */
+#endif /* Duplifinder_hpp */
