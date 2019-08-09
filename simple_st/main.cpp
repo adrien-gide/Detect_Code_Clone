@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
         if (argc == 3)
             test.repeat(argv[2]);
         else if (argc == 5)
-            test.repeat(argv[2],atoi(argv[4]),atoi(argv[4]));
+            test.repeat(argv[2],atoi(argv[3]),atoi(argv[4]));
         else
             cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
     }
@@ -101,9 +101,9 @@ int main(int argc, char* argv[])
         if (argc==3)
             test.compare(setfiles);
         else if (argc==5)
-        test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
         else
-        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
+            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
         
     }
     else
@@ -129,6 +129,6 @@ int main(int argc, char* argv[])
     
     cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
     cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
-    cout << " Memory used " << usage.ru_maxrss / 1000000 << endl;
+    cout << " Memory used ~" << usage.ru_maxrss / 1000000000 << " GB " <<  endl;
     return 0;
 }

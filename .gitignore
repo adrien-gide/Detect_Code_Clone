@@ -1,7 +1,6 @@
 .DS_Store
 *.exe
-tmp.txt
-tmp2.txt
+*.txt
 html/
 latex/
 doc/

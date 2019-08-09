@@ -199,11 +199,11 @@ void SuffixTree::loop(Node* v,int lower_bound,unsigned int upper_bound, bool mul
             
             if(!(tmp.empty()))
             {
-                cout << "\n\e[4mRepeat string :\e[0m";
+                cout << "\n\e[4mRepeat string :\e[0m\"";
                 set<pair< pair<int,int>, pair<int,int>> >::iterator it = tmp.begin();
                 for(int i=it->first.first; i<=it->first.second; i++)
                     cout<< tree_string[i];
-                cout<<endl;
+                cout<<"\""<<endl;
                 
                 cout << "  - \e[3mLength of the repeat string\e[0m : " << v->breath<< endl;
                 cout << "  - \e[3mOccurences (including repeats in a same file)\e[0m: " << v->size()<<endl;
@@ -285,5 +285,5 @@ void SuffixTree::compare(set<string> files,int lower_bound,unsigned int upper_bo
     cout << "Time concat : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
     
-    repeat(TMP_FILE,lower_bound,true);
+    repeat(TMP_FILE,lower_bound,upper_bound,true);
 }

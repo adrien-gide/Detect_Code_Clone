@@ -17,6 +17,16 @@ int main(int argc, char* argv[])
     Duplifinder test;
     clock_t time;
     time = clock();
+    
+    
+    int who = RUSAGE_SELF;
+    struct rusage usage;
+    struct timeval start, end;
+    int ret;
+    
+    
+    ret = getrusage(who, &usage);
+    start = usage.ru_utime;
 //    ".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"
     
     const char* types[] = {".cpp",".h",".hpp"};
@@ -106,6 +116,13 @@ int main(int argc, char* argv[])
     }
     
     cout << "Time finish: " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+    
+    ret = getrusage(who, &usage);
+    end = usage.ru_utime;
+    
+    cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
+    cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
+    cout << " Memory used ~" << usage.ru_maxrss << " GB " <<  endl;
 
     return 0;
 }

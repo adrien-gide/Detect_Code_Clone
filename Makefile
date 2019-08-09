@@ -5,7 +5,9 @@ MY_CXX_FLAGS= -std=c++11 -DNDEBUG -stdlib=libc++ \
 		#-Xpreprocessor -fopenmp \
 		$(CODE_COVER) \
 
-MY_CXX_OPT_FLAGS= -Wall -Os
+MY_CXX_OPT_FLAGS= -Wall -Os \
+		-g \
+
 MY_CXX=g++
 CXX_FLAGS= $(MY_CXX_FLAGS) $(MY_CXX_OPT_FLAGS) $(INC_DIR) $(LIB_DIR)
 CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
@@ -18,16 +20,16 @@ CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
 TEST= test.cpp cst/Duplifinder.cpp simple_st/Node.cpp simple_st/Suffix.cpp simple_st/SuffixTree.cpp
 CST= cst/*.cpp
 ST= simple_st/*.cpp
-LCP= lcp/*.cpp
+BWT= bwt/*.cpp
 
-all: ct.exe st.exe
+all: ct.exe st.exe bwt.exe
 
 test: test.exe
 
 $(TEST): cst/*.hpp catch.hpp simple_st/*.h
 $(CST): cst/*.hpp
 $(ST): simple_st/*.h
-$(LCP): lcp/*.hpp
+$(BWT): bwt/*.hpp
 
 test.exe: $(TEST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
@@ -38,7 +40,7 @@ ct.exe: $(CST)
 st.exe: $(ST)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
-lcp.exe: $(LCP)
+bwt.exe: $(BWT)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
 
