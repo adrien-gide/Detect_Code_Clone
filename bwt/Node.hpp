@@ -1,7 +1,7 @@
 /**
  *
- * Duplifinder.hpp
- * Created by Adrien Gide on 2019/06/28.
+ * Node.hpp
+ * Created by Adrien Gide on 2019/08/08.
  */
 #ifndef NODE
 #define NODE

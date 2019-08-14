@@ -1,7 +1,7 @@
 /**
  *
- * Duplifinder.hpp
- * Created by Adrien Gide on 2019/06/28.
+ * WaveletTree.hpp
+ * Created by Adrien Gide on 2019/08/08.
  */
 #ifndef WVLT_TREE
 #define WVLT_TREE
@@ -30,7 +30,7 @@ public:
     occu_type occus;
 
 private:
-    Node *root;    
+    Node *root;
     void fill_occus();
 
 };

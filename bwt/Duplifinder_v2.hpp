@@ -1,11 +1,11 @@
 /**
  *
- * Duplifinder.hpp
- * Created by Adrien Gide on 2019/06/28.
+ * Duplifinder_v2.hpp
+ * Created by Adrien Gide on 2019/08/08.
  */
 
-#ifndef Duplifinder_hpp
-#define Duplifinder_hpp
+#ifndef Duplifinder_v2_hpp
+#define Duplifinder_v2_hpp
 #pragma once
 
 #define TMP_FILE3 "tmp3.txt"
@@ -19,6 +19,7 @@
 #include <iterator>
 #include <queue>
 #include <boost/filesystem.hpp>
+#include <stdio.h>
 
 #include "WaveletTree.hpp"
 
@@ -72,4 +73,4 @@ private:
 
 };
 
-#endif /* Duplifinder_hpp */
+#endif /* Duplifinder_v2_hpp */

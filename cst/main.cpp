@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     start = usage.ru_utime;
 //    ".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"
     
-    const char* types[] = {".cpp",".h",".hpp"};
+    const char* types[] = {".cpp"};
     
     set<string> s_typ;
     int size =  sizeof(types) / sizeof(types[0]);
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     
     if(argc < 3)
     {
-        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
+        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500) " << endl;
         return 1;
     }
 
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     
     cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
     cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
-    cout << " Memory used ~" << usage.ru_maxrss << " GB " <<  endl;
+    cout << " Memory used ~" << usage.ru_maxrss << " kB " <<  endl;
 
     return 0;
 }

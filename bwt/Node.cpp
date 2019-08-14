@@ -1,7 +1,7 @@
 /**
  *
- * Duplifinder.hpp
- * Created by Adrien Gide on 2019/06/28.
+ * Node.cpp
+ * Created by Adrien Gide on 2019/08/08.
  */
 
 #include "Node.hpp"
@@ -18,7 +18,7 @@ Node::Node(WaveletTree& wt,string s,pair<int,int> alphabet)
         
         int m = (alphabet.first + alphabet.second)/2;
         
-        cout << s << endl;
+//        cout << s << endl;
         
         
         for(int i = 0; i < s.size(); i++)
@@ -35,11 +35,11 @@ Node::Node(WaveletTree& wt,string s,pair<int,int> alphabet)
             }
         }
 //
-        cout<<alphabet.first<<", "<<alphabet.second<<endl;
-        int size = bit_vector.size();
-        for (int o=0; o<size; o++)
-            cout << bit_vector[o];
-        cout << endl;
+//        cout<<alphabet.first<<", "<<alphabet.second<<endl;
+//        int size = bit_vector.size();
+//        for (int o=0; o<size; o++)
+//            cout << bit_vector[o];
+//        cout << endl;
         
         left = new Node(wt,zeros, make_pair(alphabet.first,m));
 
@@ -62,7 +62,7 @@ int Node::rank(int c, int i)
         if(bit_vector[o]==c)
             cpt++;
     
-    cout << cpt << endl;
+//    cout << cpt << endl;
     
     return cpt;
         

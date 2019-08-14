@@ -17,16 +17,14 @@ CCLIB= -lsdsl -ldivsufsort -ldivsufsort64 \
 #PROGRAM_OPTIONS= -DMEMORY_MAX_GB=64
 
 
-TEST= test.cpp cst/Duplifinder.cpp simple_st/Node.cpp simple_st/Suffix.cpp simple_st/SuffixTree.cpp
 CST= cst/*.cpp
 ST= simple_st/*.cpp
 BWT= bwt/*.cpp
+TEST = test.cpp cst/Duplifinder.cpp simple_st/SuffixTree.cpp simple_st/Suffix.cpp simple_st/Node.cpp bwt/Duplifinder_v2.cpp bwt/Node.cpp bwt/WaveletTree.cpp
 
-all: ct.exe st.exe bwt.exe
+all: cst.exe st.exe bwt2.exe
 
-test: test.exe
-
-$(TEST): cst/*.hpp catch.hpp simple_st/*.h
+$(TEST): *.hpp simple_st/*.h
 $(CST): cst/*.hpp
 $(ST): simple_st/*.h
 $(BWT): bwt/*.hpp
@@ -34,16 +32,17 @@ $(BWT): bwt/*.hpp
 test.exe: $(TEST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
-ct.exe: $(CST)
+cst.exe: $(CST)
 	$(MY_CXX) $(CXX_FLAGS) $^ -o $@ $(CCLIB) $(PROGRAM_OPTIONS)
 
 st.exe: $(ST)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
-bwt.exe: $(BWT)
+bwt2.exe: $(BWT)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
 
 clean:
 	rm -f *.exe
 	rm -f *.sdsl
+	rm -rf *.dSYM

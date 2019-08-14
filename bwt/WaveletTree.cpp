@@ -1,7 +1,7 @@
 /**
  *
- * Duplifinder.hpp
- * Created by Adrien Gide on 2019/06/28.
+ * WaveletTree.cpp
+ * Created by Adrien Gide on 2019/08/08.
  */
 #include "WaveletTree.hpp"
 
@@ -18,7 +18,6 @@ WaveletTree::WaveletTree(string s)
         
         if (it == occus.end())
         {
-            //            int size = occus.size();
             occus.insert(make_pair(s[i],make_pair(0,1)));
         }
         else
@@ -40,10 +39,14 @@ void WaveletTree::fill_occus()
         tmp = o->second.second;
         o->second.second=sum;
         sum+=tmp;
-        cout << o->first << " ->  (" << o->second.first<< ", "<< o->second.second << ")   " << endl;
+//        cout << o->first << " ->  (" << o->second.first<< ", "<< o->second.second << ")   " << endl;
     }
     //    int size = occus.size();
-    occus.insert(make_pair('~',make_pair(occus.size()+1,sum)));
+    occus.insert(make_pair(127,make_pair(occus.size()+1,sum)));
+    
+
+//    for(occu_type::iterator o=occus.begin(); o != occus.end(); o++)
+//        cout << o->first << " ->  (" << o->second.first<< ", "<< o->second.second << ")   " << endl;
 }
 
 

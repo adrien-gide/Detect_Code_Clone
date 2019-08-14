@@ -3,7 +3,7 @@
 //  main.cpp
 //
 //
-//  Created by Adrien Gide on 2019/06/28.
+//  Created by Adrien Gide on 2019/08/08.
 //
 //
 #include "Duplifinder_v2.hpp"
@@ -39,12 +39,19 @@ int main(int argc, char* argv[])
 //
 //    return 0;
     
-    clock_t time = clock();
+    int who = RUSAGE_SELF;
+    struct rusage usage;
+    struct timeval start, end;
+    int ret;
+    
+    
+    ret = getrusage(who, &usage);
+    start = usage.ru_utime;
 
     Duplifinder_v2 d;
      set<string> setfiles;
 
-    const char* types[] = {".cpp",".h",".hpp"};
+    const char* types[] = {".cpp"};
 
     set<string> s_typ;
     int size =  sizeof(types) / sizeof(types[0]);
@@ -52,7 +59,7 @@ int main(int argc, char* argv[])
         s_typ.insert(types[t]);
     system::error_code ec;
 
-    filesystem::path f("../gcc");
+    filesystem::path f("../sdsl-lite");
 
     if (filesystem::is_directory(f))
         for (filesystem::recursive_directory_iterator it{f, ec}, end; it != end; it.increment(ec))
@@ -83,12 +90,17 @@ int main(int argc, char* argv[])
     cout << "Time concat : " <<  clock()/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
 
-//    d.repeat(TMP_FILE3,500);
-    d.repeat("Test Files/Test3.txt");
+//    d.repeat(TMP_FILE3,30);
+    d.repeat("Test Files/Test7_1.txt");
 
 //    for(int i=0; i<d.lcp_array.size();i++)
-//        cout<<i<< " : " << d.lcp_array[i]<<endl;
-    cout << "Time complete : " << ( clock() - time )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+//        cout<<i<< " : " << d.lcp_array[i]<<endl;    
+    ret = getrusage(who, &usage);
+    end = usage.ru_utime;
+    
+    cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
+    cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
+    cout << " Memory used ~" << usage.ru_maxrss << " kB " <<  endl;
 
     return 0;
 }

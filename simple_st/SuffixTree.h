@@ -3,7 +3,7 @@
 #ifndef SRC_SUFFIXTREE_H_
 #define SRC_SUFFIXTREE_H_
 
-#define TMP_FILE "tmp.txt"
+#define TMP_FILE "tmp2.txt"
 
 #include <string>
 #include <vector>
