@@ -22,7 +22,7 @@ ST= simple_st/*.cpp
 BWT= bwt/*.cpp
 TEST = test.cpp cst/Duplifinder.cpp simple_st/SuffixTree.cpp simple_st/Suffix.cpp simple_st/Node.cpp bwt/Duplifinder_v2.cpp bwt/Node.cpp bwt/WaveletTree.cpp
 
-all: cst.exe st.exe bwt2.exe
+all: cst.exe st.exe bwt.exe
 
 $(TEST): *.hpp simple_st/*.h
 $(CST): cst/*.hpp
@@ -38,7 +38,7 @@ cst.exe: $(CST)
 st.exe: $(ST)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
-bwt2.exe: $(BWT)
+bwt.exe: $(BWT)
 	$(MY_CXX) -o $@ $^ $(CCLIB) $(PROGRAM_OPTIONS) $(CXX_FLAGS)
 
 

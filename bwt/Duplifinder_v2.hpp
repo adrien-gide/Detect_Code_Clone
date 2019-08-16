@@ -50,14 +50,12 @@ public:
     pairs_t res;
     std::string bwt;
     sdsl::bit_vector bit_bwt;
-//    std::map<std::string,int> lg_map;
     bool mult = false;
-    int lg_max = 0;
     WaveletTree::occu_type occus;
     
 public:
     void repeat(const char* name_file, int ml=2, int mo=2,bool multiple=false);
-    void compare(std::set<std::string> files, unsigned int min_lgth=2, unsigned int min_occ=500);
+    void compare(std::set<std::string> files, unsigned int min_lgth=2, unsigned int min_occ=2);
 
     
 private:

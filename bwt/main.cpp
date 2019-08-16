@@ -12,196 +12,202 @@
 using namespace std;
 using namespace boost;
 
-int main(int argc, char* argv[])
-{
-//
-//    WaveletTree *wt = new WaveletTree("mnuuuuullummmd$m");
-//
-//
-//    cout << "      completion "<<  endl;
-//
-//    for (WaveletTree::map_node::iterator it = wt->tree.begin(); it != wt->tree.end(); it++)
-//    {
-//
-//        if(!it->second->bit_vector.empty())
-//        {
-//            int size = it->second->bit_vector.size();
-//            for (int o=0; o<size; o++)
-//                cout << it->second->bit_vector[o];
-//    //        cout << "oy" << endl;
-//    //        for(int o : it->second->getBit())
-//    //            cout << o;
-//            cout << endl;
-//        }
-//        else
-//            cout << it->second->final_string<<endl;;
-//    }
-//
-//    return 0;
-    
-    int who = RUSAGE_SELF;
-    struct rusage usage;
-    struct timeval start, end;
-    int ret;
-    
-    
-    ret = getrusage(who, &usage);
-    start = usage.ru_utime;
-
-    Duplifinder_v2 d;
-     set<string> setfiles;
-
-    const char* types[] = {".cpp"};
-
-    set<string> s_typ;
-    int size =  sizeof(types) / sizeof(types[0]);
-    for(int t = 0; t <size; t++)
-        s_typ.insert(types[t]);
-    system::error_code ec;
-
-    filesystem::path f("../sdsl-lite");
-
-    if (filesystem::is_directory(f))
-        for (filesystem::recursive_directory_iterator it{f, ec}, end; it != end; it.increment(ec))
-            if (!filesystem::is_directory(it->path()) )
-                if (s_typ.find(filesystem::extension(it->path())) != s_typ.end() )
-                    setfiles.insert(it->path().string());
-
-    cout << "Time get files: " << ( clock())/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
-
-    ofstream merge(TMP_FILE3, ios_base::binary);
-    //    clock_t time =clock();
-
-//    double lg = 0;
-    int id = 0;
-    for (string f : setfiles)
-    {
-        ifstream tmp(f, ios_base::binary);
-        if (tmp.good())
-        {
-            merge << tmp.rdbuf() << "\n$id$:" << id++ << endl;
-//            lg += tmp.tellg();
-//            lg_map.insert(make_pair(f,lg));
-//            if (lg_max <= tmp.tellg())
-//                lg_max = tmp.tellg();
-        }
-        tmp.close();
-    }
-    cout << "Time concat : " <<  clock()/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
-    merge.close();
-
-//    d.repeat(TMP_FILE3,30);
-    d.repeat("Test Files/Test7_1.txt");
-
-//    for(int i=0; i<d.lcp_array.size();i++)
-//        cout<<i<< " : " << d.lcp_array[i]<<endl;    
-    ret = getrusage(who, &usage);
-    end = usage.ru_utime;
-    
-    cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
-    cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
-    cout << " Memory used ~" << usage.ru_maxrss << " kB " <<  endl;
-
-    return 0;
-}
-
 //int main(int argc, char* argv[])
 //{
+////
+////    WaveletTree *wt = new WaveletTree("mnuuuuullummmd$m");
+////
+////
+////    cout << "      completion "<<  endl;
+////
+////    for (WaveletTree::map_node::iterator it = wt->tree.begin(); it != wt->tree.end(); it++)
+////    {
+////
+////        if(!it->second->bit_vector.empty())
+////        {
+////            int size = it->second->bit_vector.size();
+////            for (int o=0; o<size; o++)
+////                cout << it->second->bit_vector[o];
+////    //        cout << "oy" << endl;
+////    //        for(int o : it->second->getBit())
+////    //            cout << o;
+////            cout << endl;
+////        }
+////        else
+////            cout << it->second->final_string<<endl;;
+////    }
+////
+////    return 0;
 //
-//    Duplifinder_v2 test;
-//    clock_t time;
-//    time = clock();
-//    //    ".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"
+//    int who = RUSAGE_SELF;
+//    struct rusage usage;
+//    struct timeval start, end;
+//    int ret;
 //
-//    const char* types[] = {".cpp",".h",".hpp"};
+//
+//    ret = getrusage(who, &usage);
+//    start = usage.ru_utime;
+//
+//    Duplifinder_v2 d;
+//     set<string> setfiles;
+//
+//    const char* types[] = {".cpp"};
 //
 //    set<string> s_typ;
 //    int size =  sizeof(types) / sizeof(types[0]);
 //    for(int t = 0; t <size; t++)
 //        s_typ.insert(types[t]);
+//    system::error_code ec;
 //
-//    if(argc < 3)
-//    {
-//        cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
-//        return 1;
-//    }
+//    filesystem::path f("../sdsl-lite");
 //
-//    if (strcmp(argv[1],"-s")==0)
-//    {
-//        if (argc == 3)
-//            test.repeat(argv[2]);
-//        else if (argc == 5)
-//            test.repeat(argv[2],atoi(argv[3]),atoi(argv[4]));
-//        else
-//            cout << " usage: " << argv[0] << " identifier file lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
-//    }
+//    if (filesystem::is_directory(f))
+//        for (filesystem::recursive_directory_iterator it{f, ec}, end; it != end; it.increment(ec))
+//            if (!filesystem::is_directory(it->path()) )
+//                if (s_typ.find(filesystem::extension(it->path())) != s_typ.end() )
+//                    setfiles.insert(it->path().string());
 //
-//    else if (strcmp(argv[1],"-c")==0)
+//    cout << "Time get files: " << ( clock())/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+//
+//    ofstream merge(TMP_FILE3, ios_base::binary);
+//    //    clock_t time =clock();
+//
+////    double lg = 0;
+//    int id = 0;
+//    for (string f : setfiles)
 //    {
-//        if(argc < 4 || atoi(argv[2]) < 2)
+//        ifstream tmp(f, ios_base::binary);
+//        if (tmp.good())
 //        {
-//            cout << " usage: " << argv[0] << " identifier number_of_files file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
-//            return 1;
+//            merge << tmp.rdbuf() << "\n$id$:" << id++ << endl;
+////            lg += tmp.tellg();
+////            lg_map.insert(make_pair(f,lg));
+////            if (lg_max <= tmp.tellg())
+////                lg_max = tmp.tellg();
 //        }
-//
-//        set<string> setfiles;
-//        for (int i = 3; i < 3+atoi(argv[2]);i++)
-//        {
-//            ifstream f(argv[i]);
-//            if (!f)
-//            {
-//                cout << " the file can't open !" << endl;
-//                return 1;
-//            }
-//            setfiles.insert(argv[i]);
-//        }
-//
-//        if (argc==atoi(argv[2])+3)
-//            test.compare(setfiles,2);
-//        else if (argc==atoi(argv[2])+5)
-//            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
-//        else
-//            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
+//        tmp.close();
 //    }
-//    else if (strcmp(argv[1],"-r")==0)
-//    {
-//        set<string> setfiles;
-//        if (argc < 3)
-//        {
-//            cout << "Usage: exe identifier path lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
-//            return 1;
-//        }
-//        system::error_code ec;
+//    cout << "Time concat : " <<  clock()/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+//    merge.close();
 //
-//        filesystem::path f(argv[2]);
+////    d.repeat(TMP_FILE3,30);
+//    d.repeat("Test Files/Test7_1.txt");
 //
-//        if (filesystem::is_directory(f))
-//            for (filesystem::recursive_directory_iterator it{f, ec}, end; it != end; it.increment(ec))
-//                if (!filesystem::is_directory(it->path()) )
-//                    if (s_typ.find(filesystem::extension(it->path())) != s_typ.end() )
-//                        setfiles.insert(it->path().string());
+////    for(int i=0; i<d.lcp_array.size();i++)
+////        cout<<i<< " : " << d.lcp_array[i]<<endl;
+//    ret = getrusage(who, &usage);
+//    end = usage.ru_utime;
 //
-//        cout << "Time get files: " << ( clock())/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
-//
-//        cout<<setfiles.size()<<endl;
-//
-//        if (argc==3)
-//            test.compare(setfiles,2);
-//        else if (argc==5)
-//            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
-//        else
-//            cout << " usage: " << argv[0] << " identifier file(s) lower_bound(min depth: default 2) upper_bound(max depth: default 500)" << endl;
-//    }
-//    else
-//    {
-//        cout << "Identifer is missing or is invalid."<<endl;
-//        cout<< "    -r : repository\n   -c: comparison between files\n    -s: single file"<<endl;
-//        return 0;
-//    }
-//
-//    cout << "Time finish: " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+//    cout << " Started at: " << start.tv_sec << "." << start.tv_usec << endl;
+//    cout << " Ended at: " << end.tv_sec << "." << end.tv_usec << endl;
+//    cout << " Memory used ~" << usage.ru_maxrss << " kB " <<  endl;
 //
 //    return 0;
 //}
-//
-//
+
+int main(int argc, char* argv[])
+{
+
+    Duplifinder_v2 test;
+    clock_t time;
+    time = clock();
+    //    ".py",".pl",".cs",".css",".html",".c",".cc",".h",".hpp"
+
+    const char* types[] = {".cpp",".h",".hpp"};
+
+    set<string> s_typ;
+    int size =  sizeof(types) / sizeof(types[0]);
+    for(int t = 0; t <size; t++)
+        s_typ.insert(types[t]);
+
+    if(argc < 3)
+    {
+        cout << " usage: " << argv[0] << " identifier file(s) min_lgth(default 2) min_occ(default 2)" << endl;
+        return 1;
+    }
+
+    if (strcmp(argv[1],"-s")==0)
+    {
+        if (argc == 3)
+            test.repeat(argv[2]);
+        else if (argc == 4)
+            test.repeat(argv[2],atoi(argv[3]));
+        else if (argc == 5)
+            test.repeat(argv[2],atoi(argv[3]),atoi(argv[4]));
+        else
+            cout << " usage: " << argv[0] << " identifier file min_lgth(default 2) min_occ(default 2)" << endl;
+    }
+
+    else if (strcmp(argv[1],"-c")==0)
+    {
+        if(argc < 4 || atoi(argv[2]) < 2)
+        {
+            cout << " usage: " << argv[0] << " identifier number_of_files file(s) min_lgth(default 2) min_occ(default 2)" << endl;
+            return 1;
+        }
+
+        set<string> setfiles;
+        for (int i = 3; i < 3+atoi(argv[2]);i++)
+        {
+            ifstream f(argv[i]);
+            if (!f)
+            {
+                cout << " the file can't open !" << endl;
+                return 1;
+            }
+            setfiles.insert(argv[i]);
+        }
+
+        if (argc==atoi(argv[2])+3)
+            test.compare(setfiles,2);
+        else if (argc==atoi(argv[2])+4)
+            test.compare(setfiles,atoi(argv[argc-1]));
+        else if (argc==atoi(argv[2])+5)
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
+        else
+            cout << " usage: " << argv[0] << " identifier file(s) lmin_lgth(default 2) min_occ(default 2)" << endl;
+    }
+    else if (strcmp(argv[1],"-r")==0)
+    {
+        set<string> setfiles;
+        if (argc < 3)
+        {
+            cout << "Usage: exe identifier path min_lgth(default 2) min_occ(default 2)" << endl;
+            return 1;
+        }
+        system::error_code ec;
+
+        filesystem::path f(argv[2]);
+
+        if (filesystem::is_directory(f))
+            for (filesystem::recursive_directory_iterator it{f, ec}, end; it != end; it.increment(ec))
+                if (!filesystem::is_directory(it->path()) )
+                    if (s_typ.find(filesystem::extension(it->path())) != s_typ.end() )
+                        setfiles.insert(it->path().string());
+
+        cout << "Time get files: " << ( clock())/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+
+        cout<<setfiles.size()<<endl;
+
+        if (argc==3)
+            test.compare(setfiles,2);
+        else if (argc==4)
+            test.compare(setfiles,atoi(argv[argc-1]));
+        else if (argc==5)
+            test.compare(setfiles,atoi(argv[argc-2]),atoi(argv[argc-1]));
+        else
+            cout << " usage: " << argv[0] << " identifier file(s) min_lgth(default 2) min_occ(default 2)" << endl;
+    }
+    else
+    {
+        cout << "Identifer is missing or is invalid."<<endl;
+        cout<< "    -r : repository\n   -c: comparison between files\n    -s: single file"<<endl;
+        return 0;
+    }
+
+    cout << "Time finish: " << ( clock() )/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
+
+    return 0;
+}
+
+

@@ -47,26 +47,26 @@
 //        time = clock();
 //        std::set<std::string> files;
 //
-//        SECTION( "2 files - Simple single strings" ) {
+//        SECTION( "Simple" ) {
 //
 //            files.insert("Test files/Test5_1.txt");
 //            files.insert("Test files/Test5_2.txt");
 //            test.compare(files);
 //    //        test.printlist();
 //        }
-//        SECTION( "2 files - Complicated single strings" ) {
+//        SECTION( "Complicated" ) {
 //            files.insert("Test files/Test6_1.txt");
 //            files.insert("Test files/Test6_2.txt");
 //            test.compare(files,3);
 //    //        test.printlist();
 //        }
-//        SECTION( "2 files - Multiple lines" ) {
+//        SECTION( "Multiple" ) {
 //            files.insert("Test files/Test7_1.txt");
 //            files.insert("Test files/Test7_2.txt");
 //            test.compare(files,8,10);
 //    //        test.printlist();
 //        }
-//        SECTION( "2 files - Source code files" ) {
+//        SECTION( "Code" ) {
 //            files.insert("Test files/Test8_1.cs");
 //            files.insert("Test files/Test8_2.cs");
 //            test.compare(files,20,30);
@@ -199,7 +199,7 @@ TEST_CASE("BWT")
         SECTION( "Multiple" ) {
             files.insert("Test files/Test7_1.txt");
             files.insert("Test files/Test7_2.txt");
-            test.compare(files,8);
+            test.compare(files,6);
             //        test.printlist();
         }
         SECTION( "Code" ) {

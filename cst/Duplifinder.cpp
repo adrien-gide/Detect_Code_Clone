@@ -26,7 +26,6 @@ void Duplifinder::repeat(const char* name_file,unsigned int lower_bound,unsigned
     cout << cst.nodes() << endl;
     cout << cst.size() << endl;
     cout << " lower_bound: "<< lower_bound << endl;
-    int d = 0;
     
     if (is.good())
     {

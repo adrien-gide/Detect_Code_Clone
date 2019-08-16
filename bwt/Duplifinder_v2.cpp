@@ -322,12 +322,12 @@ void Duplifinder_v2::process(int l, pair<string,pair<long,long> > p, bool locMax
 //                int val = 0;
 //                for(map<string,int>::iterator lg = lg_map.begin() ; lg != lg_map.end() ; lg++)
 //                {
-//                    for(pair< pair<int,int>, pair<int,int>> p : tmp)
+//                    for(pair< pair<int,int>, pair<int,int>> pr : tmp)
 //                    {
-//                        if ( p.first.first <= lg->second && p.first.first >= val )
+//                        if ( pr.first.first <= lg->second && pr.first.first >= val )
 //                            tmp2.insert(lg->first);
 //
-//                        if ( p.second.first <= lg->second && p.second.first >= val )
+//                        if ( pr.second.first <= lg->second && pr.second.first >= val )
 //                            tmp2.insert(lg->first);
 //                    }
 //                    val = lg->second;
@@ -335,6 +335,7 @@ void Duplifinder_v2::process(int l, pair<string,pair<long,long> > p, bool locMax
 //
 //                for( string f : tmp2)
 //                    cout << "      - "<< f << endl;
+//            }
             cout << endl;
 
 
@@ -605,7 +606,7 @@ void Duplifinder_v2::init_bwt()
         }
     }
     
-    cout << "Time init : " << clock() / (double) CLOCKS_PER_SEC << " second(s) "<< endl;
+    cout << "Time init : " << clock() / (double) CLOCKS_PER_SEC << " second(s)"<< endl;
 
     sort(table.begin(),table.end(),[](string a, string b){return a<b;} );
 
@@ -637,18 +638,11 @@ void Duplifinder_v2::compare(set<string> files, unsigned int min_length,unsigned
     {
         ifstream tmp(f, ios_base::binary);
         if (tmp.good())
-        {
-
             merge << tmp.rdbuf();
-//            lg += tmp.tellg();
-//            lg_map.insert(make_pair(f,lg));
-//            if (lg_max <= tmp.tellg())
-//                lg_max = tmp.tellg();
-        }
         tmp.close();
     }
     cout << "Time concat : " <<  clock()/ (double) CLOCKS_PER_SEC << " second(s)"<< endl;
     merge.close();
     mult = true;
-    repeat(TMP_FILE3, min_length);
+    repeat(TMP_FILE3, min_length,min_occ);
 }
