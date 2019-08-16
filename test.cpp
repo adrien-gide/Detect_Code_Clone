@@ -27,7 +27,7 @@ TEST_CASE("CST")
             test.repeat("Test files/Test2.txt",3);
     //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             test.repeat("Test files/Test3.txt",8);
     //        test.printlist();
         }
@@ -60,7 +60,7 @@ TEST_CASE("CST")
             test.compare(files,3);
     //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             files.insert("Test files/Test7_1.txt");
             files.insert("Test files/Test7_2.txt");
             test.compare(files,8,10);
@@ -95,7 +95,7 @@ TEST_CASE("ST")
             test.repeat("Test files/Test2.txt",3);
             //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             test.repeat("Test files/Test3.txt",8);
             //        test.printlist();
         }
@@ -128,7 +128,7 @@ TEST_CASE("ST")
             test.compare(files,3);
             //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             files.insert("Test files/Test7_1.txt");
             files.insert("Test files/Test7_2.txt");
             test.compare(files,8,10);
@@ -164,7 +164,7 @@ TEST_CASE("BWT")
             test.repeat("Test files/Test2.txt",3);
             //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             test.repeat("Test files/Test3.txt",8);
             //        test.printlist();
         }
@@ -196,7 +196,7 @@ TEST_CASE("BWT")
             test.compare(files,3);
             //        test.printlist();
         }
-        SECTION( "Multiple" ) {
+        SECTION( "Lines" ) {
             files.insert("Test files/Test7_1.txt");
             files.insert("Test files/Test7_2.txt");
             test.compare(files,6);

@@ -29,7 +29,26 @@ make test.exe
 ```
 The framework used for the [Unit tests][test] is [Catch2][catch]. It's simply a [header][header] and the usage in this project is very basic but you can see how it works on [the git][catch].
 
-You can call specific sections 
+You can call specific sections in order to test one method in particular.
+There are 3 Test cases : "CST", "ST" and "BWT".
+You can call one of them like this, and it will launch only the chosen test :
+```sh
+./test.exe CST
+```
+
+There are major sections in each test case which are "1" and "MULT". Each one of them has sub-sections : "Simple", "Complicated", "Lines" and "Code".
+
+To call the section "1" of "CST" for example :
+```sh
+./test.exe CST -c 1
+```
+To call the sub-section "Code" of "MULT" of "ST" for example :
+```sh
+./test.exe ST -c MULT -c Code
+```
+
+For any more advanced use of this framework or more information, check the [original git][catch].
+
 
 ## Getting started
 
@@ -38,12 +57,12 @@ You can call specific sections
 First, you need to create the executables with :
 ```sh
 cd Duplifinder
-make
+make all
 ```
-It will create the 3 main program : `cst.exe` , `st.exe` and `bwt.exe`. Both of them implement the same algorithm, but the first is using compressed suffix tree and the other normal suffix tree. The implementation of compressed suffix tree is the one from the [SDSL-lite library][sdsl] and the simple suffix tree implementation is the one from [adamserafini's github][adam].
+It will create the 3 main program : `cst.exe` , `st.exe` and `bwt.exe`. The first two implement the same algorithm, but the first is using compressed suffix tree and the other normal suffix tree. The implementation of compressed suffix tree is the one from the [SDSL-lite library][sdsl] and the simple suffix tree implementation is the one from [adamserafini's github][adam]. The third one is another method because the previous ones weren't working as well as we expected. It's using wavelet tree and Burrow's and Wheeler's Transform (BWT)
 
 You can create a specific executable with this line (for example `st.exe`: 
-```
+```sh
 make st.exe
 ```
 
@@ -105,7 +124,7 @@ Source files :
 
 The class `Duplifinder` inherit the sdsl-lite class `cst_sada`. It allows us to use the methods and the types provided by this class. 
 
-* bwt : implementation using wavelet tree and Burrow's and Wheeler's Transform (BWT). An implementation of wavelet tree was provided by [SDSL-lite library][sdsl] but wasn't doing what we need to do, so there our own implementation (not complete for a wavelet tree but functionnal). The solution is not finished and has bugs. Because of that, it's the slowest solution, but not the most memory-expensive.  
+* bwt : implementation using wavelet tree and BWT. An implementation of wavelet tree was provided by [SDSL-lite library][sdsl] but wasn't doing what we needed to do, so there our own implementation (not complete for a wavelet tree but functionnal). The BWT implementation is the one from [SDSL-lite][sdsl]. The solution is not finished and has bugs. Because of that, it's the slowest solution, but not the most memory-expensive.  
 Source files : 
     + Duplifinder_v2.cpp
     + Duplifinder_v2.hpp
@@ -119,11 +138,12 @@ Source files :
 ## Remaining tasks
 
 This project is not done and has some things who need to be finished :
-    
-    + Documentation
-    + Debugging of the third solution
-    + Output of the third solution (Duplicates localisation, )
-    + 
++ Debugging of the third solution.
++ Output of the third solution (Duplicates localisation (in which file), clarification).
++ Documentation.
++ Clear display of memory usage.
++ Find optimizations for algorithms.
+
 
 The function are documented in a Doxygen generated [doc][doc] (not updated).
 

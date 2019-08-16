@@ -23,7 +23,10 @@ void Duplifinder_v2::repeat(const char* name_file, int ml, int mo, bool multiple
         string s( (istreambuf_iterator<char>(is) ), (istreambuf_iterator<char>()  ));
 //        string s = "mississi$ppi";
 
-        construct_im(csa,s ,1);
+        
+        construct_im(csa,s ,1);     //Construction of a Compressed Suffix Array (CSA) in order to get the Burrow's and Wheeler's Transform (BWT) in an efficient time
+        
+        
 //        cout << " i SA ISA  LF BWT   T[SA[i]..SA[i]-1]" << endl;
 //        csXprintf(cout, "%2I %2S %3s %2p %3B   %:3T", csa);
 
@@ -32,8 +35,6 @@ void Duplifinder_v2::repeat(const char* name_file, int ml, int mo, bool multiple
 
         for(int i=0; i<=s.size();i++)
         {
-
-            
             if (s[i] != '$')
                 bwt.push_back(csa.bwt[i]);
             else if (0 == csa.bwt[i])
@@ -178,9 +179,6 @@ void Duplifinder_v2::repeat(const char* name_file, int ml, int mo, bool multiple
                                 
                             }
                         }
-            
-
-                        
                     }
                 }
                 
@@ -198,10 +196,10 @@ void Duplifinder_v2::repeat(const char* name_file, int ml, int mo, bool multiple
     is.close();
     
 
-    for(pairs_t::iterator it=res.begin(); it!=res.end(); it++)
-        cout << it->first << " - (" << it->first.size()<<")"<<endl;
-    cout<<endl;
-    cout<<endl;
+//    for(pairs_t::iterator it=res.begin(); it!=res.end(); it++)
+//        cout << it->first << " - (" << it->first.size()<<")"<<endl;
+//    cout<<endl;
+//    cout<<endl;
 
 }
 
