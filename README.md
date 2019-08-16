@@ -88,8 +88,7 @@ However, the rest remain the same. For example :
 
 There are only 3 different parts :
 * st : Implementation using [normal suffix tree][adam]. Time efficient, will run in a few minutes for big directories. Memory-expensive.  
-Modified files from [original git][adam] :
-
+Modified files from [original git][adam] :  
     + SuffixTree.cpp
     + SuffixTree.h
     + Suffix.cpp
@@ -98,18 +97,16 @@ Modified files from [original git][adam] :
     + Node.h
     + main.cpp
 
-* cst : implementation using [compressed suffix tree][sdsl]. Slower than the second one, especially for big directories (can take hours and hours in some cases). Less memory-expensive. Can be prefered for small files.
+* cst : implementation using [compressed suffix tree][sdsl]. Slower than the second one, especially for big directories (can take hours and hours in some cases). Less memory-expensive. Can be prefered for small files.  
 Source files : 
-        
     + Duplifinder.cpp
     + Duplifinder.hpp
     + main.cpp
 
 The class `Duplifinder` inherit the sdsl-lite class `cst_sada`. It allows us to use the methods and the types provided by this class. 
 
-* bwt : implementation using wavelet tree and Burrow's and Wheeler's Transform (BWT). An implementation of wavelet tree was provided by [SDSL-lite library][sdsl] but wasn't doing what we need to do, so there our own implementation (not complete for a wavelet tree but functionnal). The solution is not finished and has bugs. Because of that, it's the slowest solution, but not the most memory-expensive.
+* bwt : implementation using wavelet tree and Burrow's and Wheeler's Transform (BWT). An implementation of wavelet tree was provided by [SDSL-lite library][sdsl] but wasn't doing what we need to do, so there our own implementation (not complete for a wavelet tree but functionnal). The solution is not finished and has bugs. Because of that, it's the slowest solution, but not the most memory-expensive.  
 Source files : 
-
     + Duplifinder_v2.cpp
     + Duplifinder_v2.hpp
     + Node.cpp
@@ -118,6 +115,15 @@ Source files :
     + WaveletTree.hpp
     + main.cpp
 
+
+## Remaining tasks
+
+This project is not done and has some things who need to be finished :
+    
+    + Documentation
+    + Debugging of the third solution
+    + Output of the third solution (Duplicates localisation, )
+    + 
 
 The function are documented in a Doxygen generated [doc][doc] (not updated).
 
