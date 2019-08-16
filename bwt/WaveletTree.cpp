@@ -45,8 +45,8 @@ void WaveletTree::fill_occus()
     occus.insert(make_pair(127,make_pair(occus.size()+1,sum)));
     
 
-//    for(occu_type::iterator o=occus.begin(); o != occus.end(); o++)
-//        cout << o->first << " ->  (" << o->second.first<< ", "<< o->second.second << ")   " << endl;
+    for(occu_type::iterator o=occus.begin(); o != occus.end(); o++)
+        cout << o->first << " ->  (" << o->second.first<< ", "<< o->second.second << ")   " << endl;
 }
 
 

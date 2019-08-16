@@ -11,3 +11,4 @@ var player = GetPlayer();
 player.Move("S");
 return player.NewPosition;
 }
+

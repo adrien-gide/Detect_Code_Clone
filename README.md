@@ -92,6 +92,8 @@ Modified files from [original git][adam] :
 
     + SuffixTree.cpp
     + SuffixTree.h
+    + Suffix.cpp
+    + Suffix.h
     + Node.cpp
     + Node.h
     + main.cpp
@@ -108,13 +110,13 @@ The class `Duplifinder` inherit the sdsl-lite class `cst_sada`. It allows us to 
 * bwt : implementation using wavelet tree and Burrow's and Wheeler's Transform (BWT). An implementation of wavelet tree was provided by [SDSL-lite library][sdsl] but wasn't doing what we need to do, so there our own implementation (not complete for a wavelet tree but functionnal). The solution is not finished and has bugs. Because of that, it's the slowest solution, but not the most memory-expensive.
 Source files : 
 
-+ Duplifinder_v2.cpp
-+ Duplifinder_v2.hpp
-+ Node.cpp
-+ Node.hpp
-+ WaveletTree.cpp
-+ WaveletTree.hpp
-+ main.cpp
+    + Duplifinder_v2.cpp
+    + Duplifinder_v2.hpp
+    + Node.cpp
+    + Node.hpp
+    + WaveletTree.cpp
+    + WaveletTree.hpp
+    + main.cpp
 
 
 The function are documented in a Doxygen generated [doc][doc] (not updated).
